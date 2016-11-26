@@ -7,9 +7,14 @@ import Components.Hello exposing ( hello )
 
 
 -- APP
-main : Program Never Int Msg
+main : Program Never Model Msg
 main =
-  Html.beginnerProgram { model = model, view = view, update = update }
+  Html.program
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = \model -> Sub.none
+        }
 
 
 -- MODEL
@@ -19,14 +24,19 @@ model : number
 model = 0
 
 
+--INIT
+init : ( Model, Cmd Msg )
+init =
+    ( model, Cmd.none )
+
 -- UPDATE
 type Msg = NoOp | Increment
 
-update : Msg -> Model -> Model
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
   case msg of
-    NoOp -> model
-    Increment -> model + 1
+    NoOp -> ( model, Cmd.none )
+    Increment -> (model + 1, Cmd.none )
 
 
 -- VIEW
