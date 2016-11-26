@@ -1,5 +1,3 @@
-var Elm = require( '../elm/Main' );
-var app = Elm.Main.fullscreen();
 
 window.fbAsyncInit = function () {
 
@@ -11,6 +9,7 @@ window.fbAsyncInit = function () {
     });
 
     FB.getLoginStatus(function (response) {
+        // 
         if (response.status === 'connected') {
             console.log('Logged in.');
             var uid = response.authResponse.userID;
@@ -23,9 +22,6 @@ window.fbAsyncInit = function () {
             console.log('Logged out');
             //FB.login();
         }
-
-        app.ports.statusChange.send(response.status);
-
     }, true);
 
 };
@@ -41,28 +37,5 @@ window.fbAsyncInit = function () {
 } (document, 'script', 'facebook-jssdk'));
 
 
-app.ports.logout.subscribe(function () {
 
-    FB.logout(function (response) {
-        console.log('Logging out ' + response);
-        app.ports.statusChange.send(response.status);
-        // user is now logged out
-    });
-});
-
-app.ports.login.subscribe(function () {
-
-    FB.login(function (response) {
-        if (response.authResponse) {
-            console.log('Welcome!  Fetching your information.... ');
-            FB.api('/me', function (response) {
-                console.log('Good to see you, ' + response.name + '.');
-                app.ports.statusChange.send("connected"); //response
-            });
-        } else {
-            console.log('User cancelled login or did not fully authorize.');
-        }
-        // user is now logged out
-    });
-});
 // app.ports.errors.send(response.status);

@@ -6,7 +6,7 @@ import Html.Events exposing (onClick)
 
 
 -- component import example
-import Components.Facebook as Facebook
+import Components.Facebook as Facebook 
 
 
 -- APP
