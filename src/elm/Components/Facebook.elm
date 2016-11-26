@@ -1,4 +1,4 @@
-port module Facebook exposing (..)
+port module Components.Facebook exposing (..)
 
 port login : {} -> Cmd msg
 
