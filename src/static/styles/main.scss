@@ -3,3 +3,85 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 
 // can add Boostrap overrides, additional Sass/CSS below...
+html, body, div, .wall, .view3d, .room {
+  margin: 0;
+  }
+
+div {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.view3d {
+  perspective: 500px;
+  display: inline-block;
+  text-align: center;
+  overflow: hidden;
+}
+
+.room {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all 1s ease-in-out;
+  width: inherit;
+  height: inherit;
+}
+
+ .navbar {
+   left: 15%;
+    position: absolute; 
+    z-index: 2;
+ }
+  .navbar ul {
+    list-style-type: none;
+    text-transform: uppercase;
+  }
+  .navbar ul li {
+      margin: auto 10px;
+      padding: 5px;
+        display: inline;
+    }
+ .wall {
+  position: absolute;
+  opacity: 0.5;
+}
+
+.center {
+  background-color: lightpink;
+  z-index: 2;
+  opacity: 1;
+}
+
+.top {
+  background-color: lightcoral;
+  transform-origin: center top;
+  transform: rotateX(-90deg);
+  text-align: center;
+}
+
+.floor {
+  background-color: lightblue;
+  transform-origin: center bottom;
+  transform: rotateX(90deg);
+}
+
+.right {
+  right: 0; /* stick page right */
+  background-color: lightsalmon;
+  transform: rotateY(-90deg);
+  transform-origin: right center;
+  text-align: right;
+}
+
+.left {
+  background-color: lightseagreen;
+  transform: rotateY(90deg);
+  transform-origin: left center;
+  text-align: left;
+}
+.top, .floor, .center, .left, .right {
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+}

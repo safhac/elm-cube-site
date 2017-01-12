@@ -1,24 +1,24 @@
-port module Main exposing (..)
+module Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+-- import Element exposing (toHtml)
 import Html.Events exposing (onClick)
+import Window exposing (Size)
+import Navigation
+import Debug exposing (log)
+import Task exposing (Task)
 
 
--- component import example
-import Components.Facebook as Facebook 
+-- MAIN
 
 
--- APP
-
-
-main : Program Never Model Msg
 main =
-    Html.program
+    Navigation.program UrlChange
         { init = init
         , view = view
         , update = update
-        , subscriptions = subscriptions
+        , subscriptions = (\_ -> Window.resizes SizeChange)
         }
 
 
@@ -27,31 +27,24 @@ main =
 
 
 type alias Model =
-    { userStatus : String
+    { size : Size
+    , history : List Navigation.Location
+    , styleProps : List (String, String)
     }
-
-
-type alias User =
-    { name : String
-    , imgUrl : String
-    , loginStatus : String
-    , userType : UserType
-    }
-
-
-type UserType
-    = Client
-    | Vendor
-    | Runner
 
 
 
 --INIT
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( Model "", Cmd.none )
+init : Navigation.Location -> ( Model, Cmd Msg )
+init location =
+    ( { size = Size 0 0 
+      , history = [ location ]
+      , styleProps = [("", "")]
+      }
+    , Task.perform SizeChange Window.size
+    )
 
 
 
@@ -59,78 +52,92 @@ init =
 
 
 type Msg
-    = NoOp
-    | StatusChange String
-    | Login
-    | Logout
-
-
-port statusChange : (String -> msg) -> Sub msg
+    = UrlChange Navigation.Location
+    | SizeChange Size
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        StatusChange string ->
-            ( { model | userStatus = string }
+        UrlChange location ->
+            ( { model | history = location :: model.history
+                , styleProps = setStyle location.hash model.size.height }
+              , Cmd.none
+            )
+        SizeChange size ->
+            ( { model | size = size }
             , Cmd.none
             )
-
-        NoOp ->
-            ( model, Cmd.none )
-
-        Login ->
-            ( model, Facebook.login {} )
-
-        Logout ->
-            ( model, Facebook.logout {} )
-
-
-
--- SUBSCRIPTIONS
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    statusChange StatusChange
 
 
 
 -- VIEW
--- Html is defined as: elem [ attribs ][ children ]
--- CSS can be applied via class names or inline style attrib
 
 
-view : Model -> Html Msg
+view : Model -> Html msg
 view model =
-    div [ class "container", style [ ( "margin-top", "30px" ), ( "text-align", "center" ) ] ]
-        [ -- inline CSS (literal)
-          div [ class "row" ]
-            [ div [ class "col-xs-12" ]
-                [ div [ class "jumbotron" ]
-                    [ img [ src "static/img/elm.jpg", style styles.img ] []
-                      -- inline CSS (via var)
-                    , div [] []
-                    , if model.userStatus == "connected" then
-                        button [ class "btn btn-primary btn-lg", onClick Logout ]
-                            [ span [ class "glyphicon glyphicon-star" ] [ text "Logout" ] ]
-                      else
-                        button [ class "btn btn-primary btn-lg", onClick Login ]
-                            [ span [ class "glyphicon glyphicon-star" ] [ text "Login" ] ]
-                    ]
+    div []
+        [
+        div [ class "navbar" ]
+            [ ul [] (List.map viewLink [ "center", "top", "floor", "left", "right" ])
+            ]
+        ,
+        div [ class "view3d", cubeStyle model ]
+            [ div [ class "room", style model.styleProps ]
+                [ div [ id "ceil", class "wall top" ] []
+                , div [ class "wall floor" ] []
+                , div [ class "wall left" ] []
+                , div [ class "wall right" ] []
+                , div [ class "wall center", centerStyle model ] []
                 ]
             ]
         ]
 
 
+viewLink : String -> Html msg
+viewLink name =
+    li [] [ a [ href ("#" ++ name) ] [ text name ] ]
+
+
 
 -- CSS STYLES
 
+cubeStyle : Model -> Attribute any
+cubeStyle model =
+      style
+          [ ( "width", toString (model.size.width - 5 ) ++ "px")
+          , ( "height", toString (model.size.height - 5 ) ++ "px")
+          ]
 
-styles : { img : List ( String, String ) }
-styles =
-    { img =
-        [ ( "width", "33%" )
-        , ( "border", "4px solid #337AB7" )
+
+centerStyle : Model -> Attribute any
+centerStyle model =
+      style
+          [ ( "transform", "translateZ(-" ++ toString model.size.height ++ "px)")
+          ]
+
+
+
+setStyle : String -> Int -> List (String, String)
+setStyle hash winHeight =
+    if hash == "#center" then
+        [ ("transform", "translateZ(" ++ (toString winHeight) ++ "px)")
+            ]
+    else if hash == "#top" then
+        [ ( "transform-origin" , "center top" )
+          , ("transform", "rotateX(90deg)" )
         ]
-    }
+    else if hash == "#floor" then
+        [ ( "transform-origin" , "center bottom" )
+          , ("transform", "rotateX(-90deg)" )
+        ]    
+    else if hash == "#right" then
+        [ ( "transform-origin" , "center right" )
+          , ("transform", "rotateY(90deg)" )
+        ]      
+    else if hash == "#left" then
+        [ ( "transform-origin" , "center left" )
+          , ("transform", "rotateY(-90deg)" )
+        ]      
+    else
+        [("","")]
