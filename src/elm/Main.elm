@@ -2,8 +2,6 @@ module Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
--- import Element exposing (toHtml)
-import Html.Events exposing (onClick)
 import Window exposing (Size)
 import Navigation
 import Debug exposing (log)
@@ -62,26 +60,20 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         UrlChange location ->
-            let 
-                _ = Debug.log "url" location.hash
-            in 
-                ( { model
-                    | history = location :: model.history
-                    , roomStyle = setRoomStyle location.hash model.size.height
-                    , centerStyle = setCenterStyle location.hash model.size
-                }
-                , Cmd.none
-                )
+            ( { model
+                | history = location :: model.history
+                , roomStyle = setRoomStyle location.hash model.size.height
+                , centerStyle = setCenterStyle location.hash model.size
+            }
+            , Cmd.none
+            )
 
         SizeChange size ->
-            let 
-                _ = Debug.log "SizeChange size " size
-            in 
-                ( { model | size = size 
-                , roomStyle = setRoomStyle (getLastLocation model) size.height
-                , centerStyle = setCenterStyle (getLastLocation model ) size }
-                , Cmd.none
-                )
+            ( { model | size = size 
+            , roomStyle = setRoomStyle (getLastLocation model) size.height
+            , centerStyle = setCenterStyle (getLastLocation model ) size }
+            , Cmd.none
+            )
 
 
 getLastLocation : Model -> String
@@ -108,11 +100,41 @@ view model =
             ]
         , div [ class "view3d", cubeStyle model ]
             [ div [ class "room", style model.roomStyle ]
-                [ div [ class "wall top" ] []
-                , div [ class "wall floor" ] []
-                , div [ class "wall left" ] []
-                , div [ class "wall right" ] []
-                , div [ class "wall center", style model.centerStyle ] []
+                [ div [ class "wall top" ] [
+                    iframe [ src "https://www.youtube.com/results?search_query=elm+lang", style [("width" ,"100%"), ("height", "100%")] ]
+                        [ text "" 
+                        , p []
+                            [ text "Your browser does not support iframes." ] 
+                         ]
+                ]
+                , div [ class "wall floor" ] [
+                    iframe [ src "https://github.com/elm-lang", style [("width" ,"100%"), ("height", "100%")] ]
+                        [ text "" 
+                        , p []
+                            [ text "Your browser does not support iframes." ] 
+                         ]
+                ]
+                , div [ class "wall left" ] [
+                    iframe [ src "http://elm-lang.org/", style [("width" ,"100%"), ("height", "100%")] ]
+                        [ text "" 
+                        , p []
+                            [ text "Your browser does not support iframes." ] 
+                         ]
+                ]
+                , div [ class "wall right" ] [
+                    iframe [ src "http://package.elm-lang.org/", style [("width" ,"100%"), ("height", "100%")] ]
+                        [ text "" 
+                        , p []
+                            [ text "Your browser does not support iframes." ] 
+                         ]
+                ]
+                , div [ class "wall center", style model.centerStyle ] [
+                    iframe [ src "https://www.elm-tutorial.org/en/", style [("width" ,"100%"), ("height", "100%")] ]
+                        [ text "" 
+                        , p []
+                            [ text "Your browser does not support iframes." ] 
+                         ]
+                ]
                 ]
             ]
         ]

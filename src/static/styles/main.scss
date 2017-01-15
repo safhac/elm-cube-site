@@ -29,8 +29,10 @@ div {
 }
 
  .navbar {
-   left: 15%;
-    position: absolute; 
+    width: 100%;
+    display: flex;
+    position: absolute;
+    justify-content: space-around;
     z-index: 2;
  }
   .navbar ul {
@@ -44,7 +46,7 @@ div {
     }
  .wall {
   position: absolute;
-  opacity: 0.5;
+  // opacity: 0.5;
 }
 
 .center {
@@ -69,7 +71,7 @@ div {
 
 .right {
   right: 0; /* stick page right */
-  background-color: lightsalmon;
+  background-color: #f5e8e4;
   transform: rotateY(-90deg);
   transform-origin: right center;
   text-align: right;
