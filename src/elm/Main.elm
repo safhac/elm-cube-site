@@ -2,10 +2,7 @@ module Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-
-
 -- import Element exposing (toHtml)
-
 import Html.Events exposing (onClick)
 import Window exposing (Size)
 import Navigation
@@ -46,7 +43,7 @@ init location =
     ( { size = Size 0 0
       , history = [ location ]
       , roomStyle = [ ( "", "" ) ]
-      , centerStyle = [ ( "transform", "translateZ(-300px)" ) ]
+      , centerStyle = [ ( "", "" ) ]
       }
     , Task.perform SizeChange Window.size
     )
@@ -77,11 +74,28 @@ update msg model =
                 )
 
         SizeChange size ->
-            ( { model | size = size }
-            , Cmd.none
-            )
+            let 
+                _ = Debug.log "SizeChange size " size
+            in 
+                ( { model | size = size 
+                , roomStyle = setRoomStyle (getLastLocation model) size.height
+                , centerStyle = setCenterStyle (getLastLocation model ) size }
+                , Cmd.none
+                )
 
 
+getLastLocation : Model -> String
+getLastLocation model =
+    let history =
+            model.history
+        location =
+            List.head history
+    in 
+        case location of 
+            Just location ->
+                toString location.hash
+            Nothing ->
+                ""
 
 -- VIEW
 
@@ -90,7 +104,7 @@ view : Model -> Html msg
 view model =
     div []
         [ div [ class "navbar" ]
-            [ ul [] (List.map viewLink [ "center", "top", "floor", "left", "right" ])
+            [ ul [] (List.map viewLink [ "home", "center", "top", "floor", "left", "right" ])
             ]
         , div [ class "view3d", cubeStyle model ]
             [ div [ class "room", style model.roomStyle ]
@@ -121,15 +135,12 @@ cubeStyle model =
         ]
 
 
-centerStyle : Model -> Attribute any
-centerStyle model =
-    style
-        [ ( "transform", "translateZ(-" ++ toString model.size.height ++ "px)" )
-        ]
-
 
 setRoomStyle : String -> Int -> List ( String, String )
 setRoomStyle hash winHeight =
+    let _ 
+        = Debug.log "setRoomStyle height " winHeight
+    in 
     if hash == "#center" then
         [ ( "transform", "translateZ(" ++ (toString winHeight) ++ "px)" )
         ]
@@ -155,17 +166,12 @@ setRoomStyle hash winHeight =
 
 setCenterStyle : String -> Size -> List ( String, String )
 setCenterStyle hash winSize =
-    if hash == "" then
-        [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" ) 
-          , ( "z-index", "2" ) 
-        ]
-    else if hash == "#center" then
-        [ ( "transform", "translateZ(0)" ) 
-          , ( "z-index", "2" ) 
+    if hash == "" || hash == "#home" then
+        [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
         ]
     else if hash == "#left" || hash == "#right"  then
-        [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" ) 
-        , ( "z-index", "2" )
+        [ ( "width", "0" )
         ]    
     else
-        [ ( "z-index", "2" ) ]
+         [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
+        ]
