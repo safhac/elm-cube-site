@@ -96,19 +96,19 @@ view : Model -> Html msg
 view model =
     div []
         [ div [ class "navbar" ]
-            [ ul [] (List.map viewLink [ "home", "center", "top", "floor", "left", "right" ])
+            [ ul [] (List.map viewLink [ "all", "tutorial", "core", "html", "org", "packages" ])
             ]
         , div [ class "view3d", cubeStyle model ]
             [ div [ class "room", style model.roomStyle ]
                 [ div [ class "wall top" ] [
-                    iframe [ src "https://www.youtube.com/results?search_query=elm+lang", style [("width" ,"100%"), ("height", "100%")] ]
+                    iframe [ src "http://package.elm-lang.org/packages/elm-lang/core/latest/", style [("width" ,"100%"), ("height", "100%")] ]
                         [ text "" 
                         , p []
                             [ text "Your browser does not support iframes." ] 
                          ]
                 ]
                 , div [ class "wall floor" ] [
-                    iframe [ src "https://github.com/elm-lang", style [("width" ,"100%"), ("height", "100%")] ]
+                    iframe [ src "http://package.elm-lang.org/packages/elm-lang/html/latest/", style [("width" ,"100%"), ("height", "100%")] ]
                         [ text "" 
                         , p []
                             [ text "Your browser does not support iframes." ] 
@@ -160,22 +160,22 @@ cubeStyle model =
 
 setRoomStyle : String -> Int -> List ( String, String )
 setRoomStyle hash winHeight =
-    if hash == "#center" then
+    if hash == "#tutorial" then
         [ ( "transform", "translateZ(" ++ (toString winHeight) ++ "px)" )
         ]
-    else if hash == "#top" then
+    else if hash == "#core" then
         [ ( "transform-origin", "center top" )
         , ( "transform", "rotateX(90deg)" )
         ]
-    else if hash == "#floor" then
+    else if hash == "#html" then
         [ ( "transform-origin", "center bottom" )
         , ( "transform", "rotateX(-90deg)" )
         ]
-    else if hash == "#right" then
+    else if hash == "#packages" then
         [ ( "transform-origin", "center right" )
         , ( "transform", "rotateY(90deg)" )
         ]
-    else if hash == "#left" then
+    else if hash == "#org" then
         [ ( "transform-origin", "center left" )
         , ( "transform", "rotateY(-90deg)" )
         ]
@@ -188,7 +188,7 @@ setCenterStyle hash winSize =
     if hash == "" || hash == "#home" then
         [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
         ]
-    else if hash == "#left" || hash == "#right"  then
+    else if hash == "#org" || hash == "#packages"  then
         [ ( "width", "0" )
         ]    
     else
