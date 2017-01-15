@@ -138,9 +138,6 @@ cubeStyle model =
 
 setRoomStyle : String -> Int -> List ( String, String )
 setRoomStyle hash winHeight =
-    let _ 
-        = Debug.log "setRoomStyle height " winHeight
-    in 
     if hash == "#center" then
         [ ( "transform", "translateZ(" ++ (toString winHeight) ++ "px)" )
         ]
