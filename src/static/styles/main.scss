@@ -23,7 +23,7 @@ div {
 .room {
   position: relative;
   transform-style: preserve-3d;
-  transition: all 1s ease-in-out;
+  transition: all 2s ease-in-out;
   width: inherit;
   height: inherit;
 }
@@ -35,25 +35,28 @@ div {
     justify-content: space-around;
     z-index: 2;
  }
+
   .navbar ul {
     list-style-type: none;
     text-transform: uppercase;
   }
+  
   .navbar ul li {
       margin: auto 10px;
       padding: 5px;
-        display: inline;
+      display: inline;
     }
+
  .wall {
   position: absolute;
-  // opacity: 0.5;
+  opacity: 0.5;
 }
 
 .center {
   background-color: lightpink;
   z-index: 2;
   opacity: 1;
-  transition: all 1s ease-in-out;
+  transition: all 2s ease-in-out;
 }
 
 .top {
@@ -71,7 +74,7 @@ div {
 
 .right {
   right: 0; /* stick page right */
-  background-color: #f5e8e4;
+  background-color: #8eea7c;
   transform: rotateY(-90deg);
   transform-origin: right center;
   text-align: right;

@@ -4,7 +4,6 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Window exposing (Size)
 import Navigation
-import Debug exposing (log)
 import Task exposing (Task)
 
 
@@ -27,9 +26,24 @@ main =
 type alias Model =
     { size : Size
     , history : List Navigation.Location
-    , roomStyle : List ( String, String )
-    , centerStyle : List ( String, String )
+    , appStyles : AppStyles
     }
+
+
+type alias AppStyles =
+    { roomStyle : List ( String, String )
+    , centerStyle : List ( String, String )
+    , topStyle : List ( String, String )
+    , rightStyle : List ( String, String )
+    , bottomStyle : List ( String, String )
+    , leftStyle : List ( String, String )
+    , centerLink : String
+    }
+
+
+emptyList : List ( String, String )
+emptyList =
+    [ ( "", "" ) ]
 
 
 
@@ -40,8 +54,15 @@ init : Navigation.Location -> ( Model, Cmd Msg )
 init location =
     ( { size = Size 0 0
       , history = [ location ]
-      , roomStyle = [ ( "", "" ) ]
-      , centerStyle = [ ( "", "" ) ]
+      , appStyles =
+            { roomStyle = emptyList
+            , centerStyle = emptyList
+            , topStyle = [ ( "transform", "rotateX(-90deg)" ) ]
+            , rightStyle = emptyList
+            , bottomStyle = emptyList
+            , leftStyle = emptyList
+            , centerLink = "center"
+            }
       }
     , Task.perform SizeChange Window.size
     )
@@ -62,32 +83,37 @@ update msg model =
         UrlChange location ->
             ( { model
                 | history = location :: model.history
-                , roomStyle = setRoomStyle location.hash model.size.height
-                , centerStyle = setCenterStyle location.hash model.size
-            }
+                , appStyles = setAppStyles location.hash model.size
+              }
             , Cmd.none
             )
 
         SizeChange size ->
-            ( { model | size = size 
-            , roomStyle = setRoomStyle (getLastLocation model) size.height
-            , centerStyle = setCenterStyle (getLastLocation model ) size }
+            ( { model
+                | size = size
+                , appStyles = setAppStyles (getLastLocation model) size
+              }
             , Cmd.none
             )
 
 
 getLastLocation : Model -> String
 getLastLocation model =
-    let history =
+    let
+        history =
             model.history
+
         location =
             List.head history
-    in 
-        case location of 
+    in
+        case location of
             Just location ->
                 toString location.hash
+
             Nothing ->
                 ""
+
+
 
 -- VIEW
 
@@ -96,45 +122,16 @@ view : Model -> Html msg
 view model =
     div []
         [ div [ class "navbar" ]
-            [ ul [] (List.map viewLink [ "all", "tutorial", "core", "html", "org", "packages" ])
+            [ ul []
+                (List.map viewLink [ model.appStyles.centerLink, "top", "right", "bottom", "left" ])
             ]
         , div [ class "view3d", cubeStyle model ]
-            [ div [ class "room", style model.roomStyle ]
-                [ div [ class "wall top" ] [
-                    iframe [ src "http://package.elm-lang.org/packages/elm-lang/core/latest/", style [("width" ,"100%"), ("height", "100%")] ]
-                        [ text "" 
-                        , p []
-                            [ text "Your browser does not support iframes." ] 
-                         ]
-                ]
-                , div [ class "wall floor" ] [
-                    iframe [ src "http://package.elm-lang.org/packages/elm-lang/html/latest/", style [("width" ,"100%"), ("height", "100%")] ]
-                        [ text "" 
-                        , p []
-                            [ text "Your browser does not support iframes." ] 
-                         ]
-                ]
-                , div [ class "wall left" ] [
-                    iframe [ src "http://elm-lang.org/", style [("width" ,"100%"), ("height", "100%")] ]
-                        [ text "" 
-                        , p []
-                            [ text "Your browser does not support iframes." ] 
-                         ]
-                ]
-                , div [ class "wall right" ] [
-                    iframe [ src "http://package.elm-lang.org/", style [("width" ,"100%"), ("height", "100%")] ]
-                        [ text "" 
-                        , p []
-                            [ text "Your browser does not support iframes." ] 
-                         ]
-                ]
-                , div [ class "wall center", style model.centerStyle ] [
-                    iframe [ src "https://www.elm-tutorial.org/en/", style [("width" ,"100%"), ("height", "100%")] ]
-                        [ text "" 
-                        , p []
-                            [ text "Your browser does not support iframes." ] 
-                         ]
-                ]
+            [ div [ class "room", style model.appStyles.roomStyle ]
+                [ div [ class "wall top" ] []
+                , div [ class "wall floor", style model.appStyles.bottomStyle ] []
+                , div [ class "wall left", style model.appStyles.leftStyle ] []
+                , div [ class "wall right", style model.appStyles.rightStyle ] []
+                , div [ class "wall center", style model.appStyles.centerStyle ] []
                 ]
             ]
         ]
@@ -142,7 +139,7 @@ view model =
 
 viewLink : String -> Html msg
 viewLink name =
-    li [] [ a [ href ("#" ++ name) ] [ text name ] ]
+    li [] [ a [ href ("#" ++ name), id name ] [ text name ] ]
 
 
 
@@ -156,6 +153,101 @@ cubeStyle model =
         , ( "height", toString (model.size.height - 5) ++ "px" )
         ]
 
+
+setAppStyles : String -> Size -> AppStyles
+setAppStyles hash winSize =
+
+    if hash == "\"\"" || hash == "#back" then
+        { roomStyle = emptyList
+        , centerStyle = [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" ) ]
+        , rightStyle = emptyList
+        , leftStyle = emptyList
+        , topStyle = emptyList
+        , bottomStyle = emptyList
+        , centerLink = "center"
+        }
+
+    else if hash == "#center" then
+        { roomStyle = emptyList
+        , centerStyle = [ ( "transform", "translateZ(0)" ) ]
+        , rightStyle = emptyList
+        , leftStyle = emptyList
+        , topStyle = emptyList
+        , bottomStyle = emptyList
+        , centerLink = "back"
+        }
+
+    else if hash == "#top" then
+        { roomStyle =
+            [ ( "transform-origin", "center top" )
+            , ( "transform", "rotateX(90deg)" )
+            ]
+        , centerStyle =
+            [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" ) ]
+        , rightStyle = emptyList
+        , leftStyle = emptyList
+        , topStyle = [( "opacity", "1" )]
+        , bottomStyle = [( "display", "none" )]
+        , centerLink = "back"
+        }
+
+    else if hash == "#right" then
+        { roomStyle =
+            [ ( "transform-origin", "center right" )
+            , ( "transform", "rotateY(90deg)" )
+            ]
+        , centerStyle =
+            [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
+            , ( "opacity", "0" )
+            ]
+        , rightStyle = [( "opacity", "1" )]
+        , leftStyle = emptyList
+        , topStyle = emptyList
+        , bottomStyle = emptyList
+        , centerLink = "back"
+        }
+
+    else if hash == "#bottom" then
+        { roomStyle =
+            [ ( "transform-origin", "center bottom" )
+            , ( "transform", "rotateX(-90deg)" )
+            ]
+        , centerStyle =
+            [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
+            , ( "opacity", ".3" )
+            ]
+        , rightStyle = emptyList
+        , leftStyle = emptyList
+        , topStyle = [( "display", "none" ) ]
+        , bottomStyle = [( "opacity", "1" )]
+        , centerLink = "back"
+        }
+
+    else if hash == "#left" then
+        { roomStyle =
+            [ ( "transform-origin", "center left" )
+            , ( "transform", "rotateY(-90deg)" )
+            ]
+        , centerStyle =
+            [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
+            , ( "opacity", "0" )
+            ]
+        , rightStyle =emptyList
+        , leftStyle = [( "opacity", "1" )]
+        , topStyle = emptyList
+        , bottomStyle = emptyList
+        , centerLink = "back"
+        }
+
+    else
+        { roomStyle = emptyList
+        , centerStyle = [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )]
+        , rightStyle = emptyList
+        , leftStyle = emptyList
+        , topStyle = emptyList
+        , bottomStyle = emptyList
+        , centerLink = "center"
+        }
 
 
 setRoomStyle : String -> Int -> List ( String, String )
@@ -188,9 +280,9 @@ setCenterStyle hash winSize =
     if hash == "" || hash == "#home" then
         [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
         ]
-    else if hash == "#org" || hash == "#packages"  then
+    else if hash == "#org" || hash == "#packages" then
         [ ( "width", "0" )
-        ]    
+        ]
     else
-         [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
+        [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
         ]
