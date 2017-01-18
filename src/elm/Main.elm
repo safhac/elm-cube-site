@@ -46,7 +46,6 @@ emptyList =
     [ ( "", "" ) ]
 
 
-
 --INIT
 
 
@@ -57,7 +56,7 @@ init location =
       , appStyles =
             { roomStyle = emptyList
             , centerStyle = emptyList
-            , topStyle = [ ( "transform", "rotateX(-90deg)" ) ]
+            , topStyle = emptyList
             , rightStyle = emptyList
             , bottomStyle = emptyList
             , leftStyle = emptyList
@@ -97,6 +96,7 @@ update msg model =
             )
 
 
+
 getLastLocation : Model -> String
 getLastLocation model =
     let
@@ -112,7 +112,6 @@ getLastLocation model =
 
             Nothing ->
                 ""
-
 
 
 -- VIEW
@@ -250,39 +249,3 @@ setAppStyles hash winSize =
         }
 
 
-setRoomStyle : String -> Int -> List ( String, String )
-setRoomStyle hash winHeight =
-    if hash == "#tutorial" then
-        [ ( "transform", "translateZ(" ++ (toString winHeight) ++ "px)" )
-        ]
-    else if hash == "#core" then
-        [ ( "transform-origin", "center top" )
-        , ( "transform", "rotateX(90deg)" )
-        ]
-    else if hash == "#html" then
-        [ ( "transform-origin", "center bottom" )
-        , ( "transform", "rotateX(-90deg)" )
-        ]
-    else if hash == "#packages" then
-        [ ( "transform-origin", "center right" )
-        , ( "transform", "rotateY(90deg)" )
-        ]
-    else if hash == "#org" then
-        [ ( "transform-origin", "center left" )
-        , ( "transform", "rotateY(-90deg)" )
-        ]
-    else
-        [ ( "", "" ) ]
-
-
-setCenterStyle : String -> Size -> List ( String, String )
-setCenterStyle hash winSize =
-    if hash == "" || hash == "#home" then
-        [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
-        ]
-    else if hash == "#org" || hash == "#packages" then
-        [ ( "width", "0" )
-        ]
-    else
-        [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
-        ]
