@@ -1,6 +1,6 @@
 {
   "name": "elm-resource-cube",
-  "description": "A silly lil' 3d cube SPA with Elm resources as it's pages",
+  "description": "A silly lil' 3d cube SPA",
   "version": "0.1.1",
   "author": "Asaf Cohen",
   "repository": {
