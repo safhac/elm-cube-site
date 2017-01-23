@@ -111,7 +111,7 @@ getLastLocation model =
                 toString location.hash
 
             Nothing ->
-                ""
+                "\"\""
 
 
 -- VIEW
