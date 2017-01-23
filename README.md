@@ -8,7 +8,7 @@ A silly lil' 3d cube SPA
 ### Install:
 Clone this repo into a new project folder, e.g. `my-elm-project`:
 ```
-git clone https://github.com/moarwick/elm-webpack-starter my-elm-project
+git clone https://github.com/safhac/elm-cube-site my-elm-project
 cd my-elm-project
 ```
 
