@@ -5,7 +5,7 @@ import Html.Attributes exposing (..)
 import Window exposing (Size)
 import Navigation
 import Task exposing (Task)
-
+import Styles.Styles exposing (..)
 
 -- MAIN
 
@@ -124,7 +124,7 @@ view model =
             [ ul []
                 (List.map viewLink [ model.appStyles.centerLink, "top", "right", "bottom", "left" ])
             ]
-        , div [ class "view3d", cubeStyle model ]
+        , div [ view3d, cubeStyle model ]
             [ div [ class "room", style model.appStyles.roomStyle ]
                 [ div [ class "wall top" ] []
                 , div [ class "wall floor", style model.appStyles.bottomStyle ] []
