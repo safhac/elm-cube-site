@@ -2,20 +2,20 @@ module Update exposing (..)
 
 import Window exposing (Size)
 import Navigation
-import Model exposing(Model, emptyList, AppStyles)
+import Model exposing(Model)
 import Task exposing (Task)
--- import Styles.Styles exposing (..)
+import Model exposing (Model, emptyList)
+import Styles.Room exposing (setAppStyles)
 
 -- MSG
-
 
 type Msg
     = UrlChange Navigation.Location
     | SizeChange Size
     
     
---INIT
 
+--INIT
 
 init : Navigation.Location -> ( Model, Cmd Msg )
 init location =
@@ -35,7 +35,9 @@ init location =
     )
 
 
+
 -- UPDATE
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -72,100 +74,3 @@ getLastLocation model =
 
             Nothing ->
                 "\"\""
-
-
-
-setAppStyles : String -> Size -> AppStyles
-setAppStyles hash winSize =
-
-    if hash == "\"\"" || hash == "#back" then
-        { roomStyle = emptyList
-        , centerStyle = [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" ) ]
-        , rightStyle = emptyList
-        , leftStyle = emptyList
-        , topStyle = emptyList
-        , bottomStyle = emptyList
-        , centerLink = "center"
-        }
-
-    else if hash == "#center" then
-        { roomStyle = emptyList
-        , centerStyle = [ ( "transform", "translateZ(0)" ) ]
-        , rightStyle = emptyList
-        , leftStyle = emptyList
-        , topStyle = emptyList
-        , bottomStyle = emptyList
-        , centerLink = "back"
-        }
-
-    else if hash == "#top" then
-        { roomStyle =
-            [ ( "transform-origin", "center top" )
-            , ( "transform", "rotateX(90deg)" )
-            ]
-        , centerStyle =
-            [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" ) ]
-        , rightStyle = emptyList
-        , leftStyle = emptyList
-        , topStyle = [( "opacity", "1" )]
-        , bottomStyle = [( "display", "none" )]
-        , centerLink = "back"
-        }
-
-    else if hash == "#right" then
-        { roomStyle =
-            [ ( "transform-origin", "center right" )
-            , ( "transform", "rotateY(90deg)" )
-            ]
-        , centerStyle =
-            [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
-            , ( "opacity", "0" )
-            ]
-        , rightStyle = [( "opacity", "1" )]
-        , leftStyle = emptyList
-        , topStyle = emptyList
-        , bottomStyle = emptyList
-        , centerLink = "back"
-        }
-
-    else if hash == "#bottom" then
-        { roomStyle =
-            [ ( "transform-origin", "center bottom" )
-            , ( "transform", "rotateX(-90deg)" )
-            ]
-        , centerStyle =
-            [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
-            , ( "opacity", ".3" )
-            ]
-        , rightStyle = emptyList
-        , leftStyle = emptyList
-        , topStyle = [( "display", "none" ) ]
-        , bottomStyle = [( "opacity", "1" )]
-        , centerLink = "back"
-        }
-
-    else if hash == "#left" then
-        { roomStyle =
-            [ ( "transform-origin", "center left" )
-            , ( "transform", "rotateY(-90deg)" )
-            ]
-        , centerStyle =
-            [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
-            , ( "opacity", "0" )
-            ]
-        , rightStyle =emptyList
-        , leftStyle = [( "opacity", "1" )]
-        , topStyle = emptyList
-        , bottomStyle = emptyList
-        , centerLink = "back"
-        }
-
-    else
-        { roomStyle = emptyList
-        , centerStyle = [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )]
-        , rightStyle = emptyList
-        , leftStyle = emptyList
-        , topStyle = emptyList
-        , bottomStyle = emptyList
-        , centerLink = "center"
-        }

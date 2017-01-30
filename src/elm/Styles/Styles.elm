@@ -2,6 +2,7 @@ module Styles.Styles exposing (..)
 
 import Html
 import Html.Attributes exposing (style, class)
+import Model exposing (Model)
 
 
 view3d : Html.Attribute msg
@@ -112,3 +113,7 @@ left =
 --     height: 100%;
 --     width: 100%;
 -- }        
+
+-- CSS STYLES
+
+

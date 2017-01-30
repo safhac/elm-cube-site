@@ -1,10 +1,11 @@
 module View exposing (view)
 
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Styles.Styles exposing (..)
+import Html exposing (Html, div, ul, li, a, text, Attribute)
+import Html.Attributes exposing (class, style, id, href)
 import Model exposing (Model)
+import Styles.Styles exposing (..)
+import Styles.Room exposing (..)
 -- VIEW
 
 
@@ -33,15 +34,7 @@ viewLink name =
 
 
 
--- CSS STYLES
 
-
-cubeStyle : Model -> Attribute any
-cubeStyle model =
-    style
-        [ ( "width", toString (model.size.width - 5) ++ "px" )
-        , ( "height", toString (model.size.height - 5) ++ "px" )
-        ]
 
 
 
