@@ -2,7 +2,6 @@ module Styles.Styles exposing (..)
 
 import Html
 import Html.Attributes exposing (style, class)
-import Model exposing (Model)
 
 
 view3d : Html.Attribute msg
@@ -18,6 +17,15 @@ view3d =
 room : Html.Attribute msg
 room =
     style
+        [ ("position", "relative")
+        , ("transform-style", "preserve-3d")
+        , ("transition", "all 1s ease-in-out")
+        , ("width", "inherit")
+        , ("height", "inherit")
+        ]
+
+roomStyle : List ( String, String )
+roomStyle =
         [ ("position", "relative")
         , ("transform-style", "preserve-3d")
         , ("transition", "all 1s ease-in-out")

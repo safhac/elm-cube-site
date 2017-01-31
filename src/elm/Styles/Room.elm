@@ -3,29 +3,29 @@ module Styles.Room exposing(..)
 import Html exposing (Attribute)
 import Html.Attributes exposing (style)
 import Window exposing (Size)
-import Model exposing (Model, emptyList, AppStyles)
+import Model exposing (..)
 
 
 setAppStyles : String -> Size -> AppStyles
 setAppStyles hash winSize =
 
     if hash == "\"\"" || hash == "#back" then
-        { roomStyle = emptyList
+        { roomStyle = [("", "")]
         , centerStyle = [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" ) ]
-        , rightStyle = emptyList
-        , leftStyle = emptyList
-        , topStyle = emptyList
-        , bottomStyle = emptyList
+        , rightStyle = [("", "")]
+        , leftStyle = [("", "")]
+        , topStyle = [("", "")]
+        , bottomStyle = [("", "")]
         , centerLink = "center"
         }
 
     else if hash == "#center" then
-        { roomStyle = emptyList
+        { roomStyle = [("", "")]
         , centerStyle = [ ( "transform", "translateZ(0)" ) ]
-        , rightStyle = emptyList
-        , leftStyle = emptyList
-        , topStyle = emptyList
-        , bottomStyle = emptyList
+        , rightStyle = [("", "")]
+        , leftStyle = [("", "")]
+        , topStyle = [("", "")]
+        , bottomStyle = [("", "")]
         , centerLink = "back"
         }
 
@@ -36,8 +36,8 @@ setAppStyles hash winSize =
             ]
         , centerStyle =
             [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" ) ]
-        , rightStyle = emptyList
-        , leftStyle = emptyList
+        , rightStyle = [("", "")]
+        , leftStyle = [("", "")]
         , topStyle = [( "opacity", "1" )]
         , bottomStyle = [( "display", "none" )]
         , centerLink = "back"
@@ -53,9 +53,9 @@ setAppStyles hash winSize =
             , ( "opacity", "0" )
             ]
         , rightStyle = [( "opacity", "1" )]
-        , leftStyle = emptyList
-        , topStyle = emptyList
-        , bottomStyle = emptyList
+        , leftStyle = [("", "")]
+        , topStyle = [("", "")]
+        , bottomStyle = [("", "")]
         , centerLink = "back"
         }
 
@@ -68,8 +68,8 @@ setAppStyles hash winSize =
             [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
             , ( "opacity", ".3" )
             ]
-        , rightStyle = emptyList
-        , leftStyle = emptyList
+        , rightStyle = [("", "")]
+        , leftStyle = [("", "")]
         , topStyle = [( "display", "none" ) ]
         , bottomStyle = [( "opacity", "1" )]
         , centerLink = "back"
@@ -84,20 +84,20 @@ setAppStyles hash winSize =
             [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
             , ( "opacity", "0" )
             ]
-        , rightStyle =emptyList
+        , rightStyle = [("", "")]
         , leftStyle = [( "opacity", "1" )]
-        , topStyle = emptyList
-        , bottomStyle = emptyList
+        , topStyle = [("", "")]
+        , bottomStyle = [("", "")]
         , centerLink = "back"
         }
 
     else
-        { roomStyle = emptyList
+        { roomStyle = [("", "")]
         , centerStyle = [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )]
-        , rightStyle = emptyList
-        , leftStyle = emptyList
-        , topStyle = emptyList
-        , bottomStyle = emptyList
+        , rightStyle = [("", "")]
+        , leftStyle = [("", "")]
+        , topStyle = [("", "")]
+        , bottomStyle = [("", "")]
         , centerLink = "center"
         }
 

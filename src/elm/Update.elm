@@ -4,7 +4,8 @@ import Window exposing (Size)
 import Navigation
 import Model exposing(Model)
 import Task exposing (Task)
-import Model exposing (Model, emptyList)
+import Model exposing (Model)
+import Styles.Styles exposing (..)
 import Styles.Room exposing (setAppStyles)
 
 -- MSG
@@ -22,12 +23,12 @@ init location =
     ( { size = Size 0 0
       , history = [ location ]
       , appStyles =
-            { roomStyle = emptyList
-            , centerStyle = emptyList
-            , topStyle = emptyList
-            , rightStyle = emptyList
-            , bottomStyle = emptyList
-            , leftStyle = emptyList
+            { roomStyle = roomStyle
+            , centerStyle = [("", "")]
+            , topStyle = [("", "")]
+            , rightStyle = [("", "")]
+            , bottomStyle = [("", "")]
+            , leftStyle = [("", "")]
             , centerLink = "center"
             }
       }
