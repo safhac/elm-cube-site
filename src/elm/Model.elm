@@ -29,21 +29,3 @@ type alias AppStyles =
 
 type alias EmptyList = List ( String , String ) 
 
-    -- type AppStyle =
---     Center
---     | Room
---     | Right
---     | Left
---     | Top
---     | Floor
-
-
--- type alias AppStyles =
---     { roomStyle : AppStyle
---     , centerStyle : AppStyle
---     , topStyle : AppStyle
---     , rightStyle : AppStyle
---     , bottomStyle : AppStyle
---     , leftStyle : AppStyle
---     , centerLink : String
---     }

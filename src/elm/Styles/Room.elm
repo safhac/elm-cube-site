@@ -12,18 +12,18 @@ setAppStyles hash winSize =
     if hash == "\"\"" || hash == "#back" then
         { roomStyle = [("", "")]
         , centerStyle = [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" ) ]
-        , rightStyle = [("", "")]
-        , leftStyle = [("", "")]
+        , rightStyle = [("width", toString winSize.height ++ "px")]
+        , leftStyle = [("width", toString winSize.height ++ "px")]
         , topStyle = [("", "")]
         , bottomStyle = [("", "")]
         , centerLink = "center"
         }
 
     else if hash == "#center" then
-        { roomStyle = [("", "")]
-        , centerStyle = [ ( "transform", "translateZ(0)" ) ]
-        , rightStyle = [("", "")]
-        , leftStyle = [("", "")]
+        { roomStyle = [ ( "transform", "translateZ(" ++ toString winSize.height ++ "px)" ) ]
+        , centerStyle = [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" ) ]
+        , rightStyle = [("width", toString winSize.height ++ "px")]
+        , leftStyle = [("width", toString winSize.height ++ "px")]
         , topStyle = [("", "")]
         , bottomStyle = [("", "")]
         , centerLink = "back"
@@ -36,9 +36,9 @@ setAppStyles hash winSize =
             ]
         , centerStyle =
             [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" ) ]
-        , rightStyle = [("", "")]
-        , leftStyle = [("", "")]
-        , topStyle = [( "opacity", "1" )]
+        , rightStyle = [("width", toString winSize.height ++ "px")]
+        , leftStyle = [("width", toString winSize.height ++ "px")]
+        , topStyle = [("", "")]
         , bottomStyle = [( "display", "none" )]
         , centerLink = "back"
         }
@@ -52,8 +52,8 @@ setAppStyles hash winSize =
             [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
             , ( "opacity", "0" )
             ]
-        , rightStyle = [( "opacity", "1" )]
-        , leftStyle = [("", "")]
+        , rightStyle = [("width", toString winSize.width ++ "px")]
+        , leftStyle = [("width", toString winSize.height ++ "px")]
         , topStyle = [("", "")]
         , bottomStyle = [("", "")]
         , centerLink = "back"
@@ -61,17 +61,15 @@ setAppStyles hash winSize =
 
     else if hash == "#bottom" then
         { roomStyle =
-            [ ( "transform-origin", "center bottom" )
+            [( "transform-origin", "center bottom" )
             , ( "transform", "rotateX(-90deg)" )
             ]
         , centerStyle =
-            [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
-            , ( "opacity", ".3" )
-            ]
-        , rightStyle = [("", "")]
-        , leftStyle = [("", "")]
-        , topStyle = [( "display", "none" ) ]
-        , bottomStyle = [( "opacity", "1" )]
+            [( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )]
+        , rightStyle = [("width", toString winSize.height ++ "px")]
+        , leftStyle = [("width", toString winSize.height ++ "px")]
+        , topStyle = [( "display", "none" )]
+        , bottomStyle = [( "", "" )]
         , centerLink = "back"
         }
 
@@ -84,8 +82,8 @@ setAppStyles hash winSize =
             [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
             , ( "opacity", "0" )
             ]
-        , rightStyle = [("", "")]
-        , leftStyle = [( "opacity", "1" )]
+        , rightStyle = [("width", toString winSize.height ++ "px")]
+        , leftStyle = [("", "")]
         , topStyle = [("", "")]
         , bottomStyle = [("", "")]
         , centerLink = "back"
@@ -94,8 +92,8 @@ setAppStyles hash winSize =
     else
         { roomStyle = [("", "")]
         , centerStyle = [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )]
-        , rightStyle = [("", "")]
-        , leftStyle = [("", "")]
+        , rightStyle = [("width", toString winSize.height ++ "px")]
+        , leftStyle = [("width", toString winSize.height ++ "px")]
         , topStyle = [("", "")]
         , bottomStyle = [("", "")]
         , centerLink = "center"

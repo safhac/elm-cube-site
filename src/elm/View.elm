@@ -21,7 +21,7 @@ view model =
             ]
         , div [ view3d, cubeStyle model ]
             [ div [ class "room", style model.appStyles.roomStyle ]
-                [ div [ class "wall top" ] []
+                [ div [ class "wall top", style model.appStyles.topStyle ] []
                 , div [ class "wall floor", style model.appStyles.bottomStyle ] []
                 , div [ class "wall left", style model.appStyles.leftStyle ] []
                 , div [ class "wall right", style model.appStyles.rightStyle ] []
