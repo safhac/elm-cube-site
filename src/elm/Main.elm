@@ -6,6 +6,7 @@ import Navigation exposing (program)
 import Model exposing (Model)
 import Update exposing (Msg(..), init, update)
 import View exposing (view)
+import Keyboard exposing (..)
 
 
 
@@ -17,7 +18,7 @@ main =
         { init = init
         , view = view
         , update = update
-        , subscriptions = (\_ -> Window.resizes SizeChange)
+        , subscriptions = (\_ -> Sub.batch [ Window.resizes SizeChange, Keyboard.presses onKeyPress ])
         }
 
 

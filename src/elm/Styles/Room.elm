@@ -49,8 +49,8 @@ setAppStyles hash winSize =
             , ( "transform", "rotateY(90deg)" )
             ]
         , centerStyle =
-            [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
-            , ( "opacity", "0" )
+            [ ( "display", "none" )
+            , ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
             ]
         , rightStyle = [("width", toString winSize.width ++ "px")]
         , leftStyle = [("width", toString winSize.height ++ "px")]
@@ -79,8 +79,8 @@ setAppStyles hash winSize =
             , ( "transform", "rotateY(-90deg)" )
             ]
         , centerStyle =
-            [ ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
-            , ( "opacity", "0" )
+            [ ( "display", "none" )
+            , ( "transform", "translateZ(-" ++ toString winSize.height ++ "px)" )
             ]
         , rightStyle = [("width", toString winSize.height ++ "px")]
         , leftStyle = [("", "")]

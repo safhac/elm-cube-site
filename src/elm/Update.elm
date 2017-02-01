@@ -68,7 +68,7 @@ getLastLocation model =
 
         location =
             List.head history
-    in
+    incd..
         case location of
             Just location ->
                 toString location.hash
