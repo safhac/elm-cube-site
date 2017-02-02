@@ -5,14 +5,20 @@ import Navigation
 import Model exposing(Model)
 import Task exposing (Task)
 import Model exposing (Model)
-import Styles.Styles exposing (..)
-import Styles.Room exposing (setAppStyles)
+import Char exposing (fromCode)
+-- import Styles.Styles exposing (..)
+-- import Styles.Room exposing (setAppStyles)
 
 -- MSG
 
 type Msg
     = UrlChange Navigation.Location
     | SizeChange Size
+    | Top
+    | Right
+    | Bottom
+    | Left
+    | Center
     
     
 
@@ -22,18 +28,32 @@ init : Navigation.Location -> ( Model, Cmd Msg )
 init location =
     ( { size = Size 0 0
       , history = [ location ]
-      , appStyles =
-            { roomStyle = roomStyle
-            , centerStyle = [("", "")]
-            , topStyle = [("", "")]
-            , rightStyle = [("", "")]
-            , bottomStyle = [("", "")]
-            , leftStyle = [("", "")]
-            , centerLink = "center"
-            }
       }
     , Task.perform SizeChange Window.size
     )
+
+
+
+onKeyPress : Int -> Msg
+onKeyPress code =
+    case (Char.fromCode code) of
+        '8' ->
+            Top
+    
+        '6' ->
+            Right
+
+        '2' ->
+            Bottom
+
+        '4' ->
+            Left
+
+        '5' ->
+            Center
+            
+        _ ->
+            Center
 
 
 
@@ -45,7 +65,6 @@ update msg model =
         UrlChange location ->
             ( { model
                 | history = location :: model.history
-                , appStyles = setAppStyles location.hash model.size
               }
             , Cmd.none
             )
@@ -53,10 +72,34 @@ update msg model =
         SizeChange size ->
             ( { model
                 | size = size
-                , appStyles = setAppStyles (getLastLocation model) size
               }
             , Cmd.none
             )
+
+        Top ->
+            let location =
+                List.head model.history
+                _ = Debug.log "top " location
+            in
+                model ! []
+
+        Right ->
+            model ! []
+
+        Bottom ->
+            model ! []
+
+        Left ->
+            model ! []
+        
+        Center ->
+            let location =
+                List.head model.history
+                _ = Debug.log "center " location
+            in
+                model ! []
+         
+
 
 
 
@@ -68,7 +111,7 @@ getLastLocation model =
 
         location =
             List.head history
-    incd..
+    in
         case location of
             Just location ->
                 toString location.hash

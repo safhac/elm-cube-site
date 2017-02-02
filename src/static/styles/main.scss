@@ -28,6 +28,36 @@ div {
   height: inherit;
 }
 
+.roomTop {
+  transform-origin : center top;
+  transform : rotateX(90deg);
+}
+
+.roomRight {
+  transform-origin : center right;
+  transform : rotateY(90deg);
+}
+
+.roomBottom {
+  transform-origin : center bottom;
+  transform : rotateX(-90deg);
+}
+
+.roomLeft {
+  transform-origin : center left;
+  transform : rotateY(-90deg);
+}
+
+.roomCenter {
+  
+}
+
+.roomTop {
+  transform-origin : center top;
+  transform : rotateX(90deg);
+}
+
+
  .navbar {
     width: 100%;
     display: flex;

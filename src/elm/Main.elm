@@ -4,9 +4,11 @@ module Main exposing (..)
 import Window exposing (Size)
 import Navigation exposing (program)
 import Model exposing (Model)
-import Update exposing (Msg(..), init, update)
+import Update exposing (Msg(..), init, update, onKeyPress)
 import View exposing (view)
-import Keyboard exposing (..)
+import Keyboard exposing (presses)
+
+
 
 
 
@@ -18,9 +20,16 @@ main =
         { init = init
         , view = view
         , update = update
-        , subscriptions = (\_ -> Sub.batch [ Window.resizes SizeChange, Keyboard.presses onKeyPress ])
+        , subscriptions = subscriptions
         }
 
 
 
+-- SUBSCRIPTIONS
 
+subscriptions : Model -> Sub Update.Msg
+subscriptions model =
+    Sub.batch
+        [ Window.resizes SizeChange
+        , Keyboard.presses onKeyPress 
+        ]
