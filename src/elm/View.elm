@@ -6,7 +6,7 @@ import Model exposing (Model)
 import Update exposing (getLastLocation)
 import Styles.Styles as Styles exposing (..)
 import Styles.Room as Room exposing (..)
-import Char exposing (isLower) 
+import Char exposing (isLower)
 
 
 -- VIEW
@@ -23,55 +23,54 @@ view model =
             [ let
                 url =
                     getLastLocation model
-                currentView = 
+
+                currentWall =
                     String.filter isLower url
+
+                roomHeight =
+                    model.size |> .height
               in
-                showRoom currentView 
+                showRoom currentWall roomHeight
             ]
         ]
 
-    
-{- 
-display the cube 
-classList determines which css class to add inorder to transform the cube for each view (up, down, left, right).
-the additional css classes are: 
-top = roomTop, bottom = roomBottom etc..
 
-the cube's walls are filled by calling getPage with the wall's name and the current view so each walls are styled accordingly
- -}
-showRoom : String -> Html msg
-showRoom currentView =
+
+{- display the cube - classList determines which css class to add for 3d transformations for each view (up class="room roomTop", down class="room roomBottom" etc..-}
+showRoom : String -> Int -> Html msg
+showRoom currentWall height_ =
     div
         [ classList
             [ ( "room", True )
-            , ( "roomTop", currentView == "top" )
-            , ( "roomRight", currentView == "right" )
-            , ( "roomBottom", currentView == "bottom" )
-            , ( "roomLeft", currentView == "left" )
-            , ( "roomCenter", currentView == "center" )
+            , ( "roomTop", currentWall == "top" )
+            , ( "roomRight", currentWall == "right" )
+            , ( "roomBottom", currentWall == "bottom" )
+            , ( "roomLeft", currentWall == "left" )
+            , ( "roomCenter", currentWall == "center" )
             ]
-            
+        , Room.additionalStyles currentWall height_
         ]
-         ( List.map (flip getPage currentView )  [ "center", "top", "right", "bottom", "left" ] )
-        
+        --(flip getPage currentWall)
+        (List.map (\page -> getPage page currentWall height_) [ "center", "top", "right", "bottom", "left" ])
 
 
-getPage : String -> String -> Html msg
-getPage page currentView =
+
+{- fills the cube with walls styled according to the current view
+and window height -}
+getPage : String -> String -> Int -> Html msg
+getPage page currentWall height_ =
     div
         [ classList
             [ ( "wall", True )
-            , ( "top", page == "top" && currentView /= "bottom" )
-            , ( "right", page == "right" && currentView /= "left" )
-            , ( "floor", page == "bottom" && currentView /= "top" )
-            , ( "left", page == "left" && currentView /= "right" )
-            , ( "center", page == "center" && currentView /= page )
+            , ( "top", page == "top")
+            , ( "right", page == "right")
+            , ( "floor", page == "bottom")
+            , ( "left", page == "left")
+            , ( "center", page == "center")
             ]
-            , Room.additionalStyles page
+        , Room.additionalWallStyles page currentWall height_
         ]
-        [ text (page ++ " " ++ currentView) ]
-
-
+        [ text (page ++ " " ++ currentWall) ]
 
 
 

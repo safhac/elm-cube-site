@@ -1,11 +1,11 @@
-// $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
-// @import '~bootstrap-sass/assets/stylesheets/bootstrap/_mixins.scss';
-// @import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
-
-// can add Boostrap overrides, additional Sass/CSS below...
-html, body, div, .wall, .view3d, .room {
-  margin: 0;
-  }
+html,
+body,
+div,
+.wall,
+.view3d,
+.room {
+    margin: 0;
+}
 
 div {
     -moz-box-sizing: border-box;
@@ -13,110 +13,145 @@ div {
     box-sizing: border-box;
 }
 
+
+/************************************************* cube styles *************************************************/
+
+
+/* cube container */
+
 .view3d {
-  perspective: 500px;
-  display: inline-block;
-  text-align: center;
-  overflow: hidden;
+    perspective: 500px;
+    display: inline-block;
+    text-align: center;
+    overflow: hidden;
 }
+
+
+/* default room */
 
 .room {
-  position: relative;
-  transform-style: preserve-3d;
-  transition: all 1s ease-in-out;
-  width: inherit;
-  height: inherit;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: all 1s ease-in-out;
+    width: inherit;
+    height: inherit;
 }
 
+
+/* room up */
+
 .roomTop {
-  transform-origin : center top;
-  transform : rotateX(90deg);
+    transform-origin: center top;
+    transform: rotateX(90deg);
 }
+
+
+/* room right */
 
 .roomRight {
-  transform-origin : center right;
-  transform : rotateY(90deg);
+    transform-origin: center right;
+    transform: rotateY(90deg);
 }
+
+
+/* room down */
 
 .roomBottom {
-  transform-origin : center bottom;
-  transform : rotateX(-90deg);
+    transform-origin: center bottom;
+    transform: rotateX(-90deg);
 }
+
+
+/* room left */
 
 .roomLeft {
-  transform-origin : center left;
-  transform : rotateY(-90deg);
-}
-
-.roomCenter {
-  
-}
-
-.roomTop {
-  transform-origin : center top;
-  transform : rotateX(90deg);
+    transform-origin: center left;
+    transform: rotateY(-90deg);
 }
 
 
- .navbar {
+/************************************************* cube wall styles *************************************************/
+
+
+/* default wall */
+
+.wall {
+    position: absolute;
+    opacity: 0.5;
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+}
+
+
+/* center wall */
+
+.center {
+    background-color: lightpink;
+    z-index: 2;
+    transition: all 1s ease-in-out;
+    opacity: 0;
+}
+
+
+/* top wall */
+
+.top {
+    background-color: lightcoral;
+    transform-origin: center top;
+    transform: rotateX(-90deg);
+    text-align: center;
+}
+
+
+/* bottom wall */
+
+.floor {
+    background-color: lightblue;
+    transform-origin: center bottom;
+    transform: rotateX(90deg);
+}
+
+
+/* right wall */
+
+.right {
+    right: 0;
+    /* stick page right */
+    background-color: #8eea7c;
+    transform: rotateY(-90deg);
+    transform-origin: right center;
+    text-align: right;
+}
+
+
+/* left wall */
+
+.left {
+    background-color: lightseagreen;
+    transform: rotateY(90deg);
+    transform-origin: left center;
+    text-align: left;
+}
+
+
+/************************************************* navigation styles *************************************************/
+
+.navbar {
     width: 100%;
     display: flex;
     position: absolute;
     justify-content: space-around;
     z-index: 2;
- }
+}
 
-  .navbar ul {
+.navbar ul {
     list-style-type: none;
     text-transform: uppercase;
-  }
-  
-  .navbar ul li {
-      margin: auto 10px;
-      padding: 5px;
-      display: inline;
-    }
-
- .wall {
-  position: absolute;
-  opacity: 0.5;
 }
 
-.center {
-  background-color: lightpink;
-  z-index: 2;
-  transition: all 1s ease-in-out;
-}
-
-.top {
-  background-color: lightcoral;
-  transform-origin: center top;
-  transform: rotateX(-90deg);
-  text-align: center;
-}
-
-.floor {
-  background-color: lightblue;
-  transform-origin: center bottom;
-  transform: rotateX(90deg);
-}
-
-.right {
-  right: 0; /* stick page right */
-  background-color: #8eea7c;
-  transform: rotateY(-90deg);
-  transform-origin: right center;
-  text-align: right;
-}
-
-.left {
-  background-color: lightseagreen;
-  transform: rotateY(90deg);
-  transform-origin: left center;
-  text-align: left;
-}
-.top, .floor, .center, .left, .right {
-    margin: 0 auto;
-    height: 100%;
-    width: 100%;
+.navbar ul li {
+    margin: auto 10px;
+    padding: 5px;
+    display: inline;
 }
