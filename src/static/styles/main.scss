@@ -77,8 +77,8 @@ div {
 
 .wall {
     position: absolute;
-    opacity: 0.5;
     margin: 0 auto;
+    overflow: auto;
     height: 100%;
     width: 100%;
 }
@@ -97,12 +97,72 @@ div {
 /* top wall */
 
 .top {
-    background-color: lightcoral;
     transform-origin: center top;
     transform: rotateX(-90deg);
     text-align: center;
+    overflow: hidden;
+    height: 100%;
 }
 
+.topContent {
+    overflow: hidden;
+    background-image: url("/static/img/top/sky.jpg");
+    background-position: top;
+    background-repeat: repeat-x;
+    background-size: 150%;
+    animation: animatedBackground 20s linear infinite;
+}
+
+.topContent.active {
+    background-image: none;
+    overflow: auto;
+    transition: all 1s ease-in-out;
+}
+
+.topContent img {
+    padding: 5px;
+    max-width: 230px;
+    max-height: 230px;
+    width: auto;
+    height: auto;
+    transform-origin: center top;
+    opacity: 0;
+    transform: rotateX(90deg);
+    transition: all 1s ease-in-out;
+}
+
+.topContent.active img {
+    opacity: 1;
+    transform: rotateX(0deg);
+    transition: all 1s ease-in-out;
+}
+
+@keyframes animatedBackground {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 100% 0;
+    }
+}
+
+// @keyframes popin {
+//     from {}
+//     to {
+//         opacity: 1;
+//         transform: rotateX(0deg);
+//     }
+// }
+// @keyframes popout {
+//     from {
+//         opacity: 1;
+//         transform: rotateX(0deg);
+//     }
+//     to {
+//         opacity: 0;
+//         transform: rotateX(90deg);
+//     }
+// }
 
 /* bottom wall */
 

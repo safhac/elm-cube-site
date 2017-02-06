@@ -5,6 +5,7 @@ import Html.Attributes exposing (class, style, id, href, classList)
 import Model exposing (Model)
 import Styles.Styles as Styles exposing (..)
 import Styles.Room as Room exposing (..)
+import Rooms.Top as Top exposing (..)
 import Char exposing (isLower)
 
 
@@ -35,9 +36,9 @@ view model =
 
 
 
-{- display the cube - classList determines which css class to add for 3d transformations for each view (up class="room roomTop", down class="room roomBottom" etc..-}
+{- Display the room. classList determines which css class to add for 3d transformations for each view (up class="room roomTop", down class="room roomBottom" etc..-}
 showRoom : String -> Int -> Html msg
-showRoom currentWall height_ =
+showRoom currentWall roomHeight =
     div
         [ classList
             [ ( "room", True )
@@ -47,29 +48,39 @@ showRoom currentWall height_ =
             , ( "roomLeft", currentWall == "left" )
             , ( "roomCenter", currentWall == "center" )
             ]
-        , Room.additionalStyles currentWall height_
+        , Room.additionalStyles currentWall roomHeight
         ]
-        --(flip getPage currentWall)
-        (List.map (\page -> getPage page currentWall height_) [ "center", "top", "right", "bottom", "left" ])
+        (List.map (\wall -> getRoomWall wall currentWall roomHeight) [ "center", "top", "right", "bottom", "left" ])
 
 
 
-{- fills the cube with walls styled according to the current view
+{- fills the room with walls styled according to the current view
 and window height -}
-getPage : String -> String -> Int -> Html msg
-getPage page currentWall height_ =
+getRoomWall : String -> String -> Int -> Html msg
+getRoomWall wall currentWall roomHeight =
     div
         [ classList
             [ ( "wall", True )
-            , ( "top", page == "top")
-            , ( "right", page == "right")
-            , ( "floor", page == "bottom")
-            , ( "left", page == "left")
-            , ( "center", page == "center")
+            , ( "top", wall == "top")
+            , ( "right", wall == "right")
+            , ( "floor", wall == "bottom")
+            , ( "left", wall == "left")
+            , ( "center", wall == "center")
             ]
-        , Room.additionalWallStyles page currentWall height_
+        , Room.additionalWallStyles wall currentWall roomHeight
         ]
-        [ text (page ++ " " ++ currentWall) ]
+        [ 
+            -- if wall == currentWall && wall == "top" then
+            --     Top.content 
+            -- else
+            --     div [] []
+
+            case wall of
+                "top" ->
+                    Top.content currentWall
+                _ ->
+                    div [] []
+        ]
 
 
 
