@@ -6,8 +6,7 @@ import Model exposing(Model)
 import Task exposing (Task)
 import Model exposing (Model)
 import Char exposing (fromCode)
--- import Styles.Styles exposing (..)
--- import Styles.Room exposing (setAppStyles)
+
 
 -- MSG
 
@@ -19,6 +18,7 @@ type Msg
     | Bottom
     | Left
     | Center
+    | Back
     
     
 
@@ -28,6 +28,7 @@ init : Navigation.Location -> ( Model, Cmd Msg )
 init location =
     ( { size = Size 0 0
       , history = [ location ]
+      , current = location
       }
     , Task.perform SizeChange Window.size
     )
@@ -53,7 +54,7 @@ onKeyPress code =
             Center
             
         _ ->
-            Center
+            Back
 
 
 
@@ -65,6 +66,7 @@ update msg model =
         UrlChange location ->
             ( { model
                 | history = location :: model.history
+                , current = location
               }
             , Cmd.none
             )
@@ -77,30 +79,58 @@ update msg model =
             )
 
         Top ->
-            let location =
-                List.head model.history
-                _ = Debug.log "top " location
+            let 
+                oldView =
+                    model.current
+                goUp =
+                    Navigation.newUrl (oldView.origin ++ "#top")
             in
-                model ! []
+                (model, goUp)
 
         Right ->
-            model ! []
+            let 
+                oldView =
+                    model.current
+                goRight =
+                    Navigation.newUrl (oldView.origin ++ "#right")
+            in
+                (model, goRight)
 
         Bottom ->
-            model ! []
+            let 
+                oldView =
+                    model.current
+                goDown =
+                    Navigation.newUrl (oldView.origin ++ "#bottom")
+            in
+                (model, goDown)
 
         Left ->
-            model ! []
+            let 
+                oldView =
+                    model.current
+                goLeft =
+                    Navigation.newUrl (oldView.origin ++ "#left")
+            in
+                (model, goLeft)
         
         Center ->
-            let location =
-                List.head model.history
-                _ = Debug.log "center " location
+            let 
+                oldView =
+                    model.current
+                goIn =
+                    Navigation.newUrl (oldView.origin ++ "#center")
             in
-                model ! []
-         
+                (model, goIn)
 
-
+        Back ->
+            let 
+                oldView =
+                    model.current
+                goOut =
+                    Navigation.newUrl (oldView.origin ++ "")
+            in
+                (model, goOut)
 
 
 getLastLocation : Model -> String
