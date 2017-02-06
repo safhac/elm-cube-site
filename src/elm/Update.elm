@@ -27,7 +27,6 @@ type Msg
 init : Navigation.Location -> ( Model, Cmd Msg )
 init location =
     ( { size = Size 0 0
-      , history = [ location ]
       , current = location
       }
     , Task.perform SizeChange Window.size
@@ -59,14 +58,12 @@ onKeyPress code =
 
 
 -- UPDATE
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         UrlChange location ->
             ( { model
-                | history = location :: model.history
-                , current = location
+                |  current = location 
               }
             , Cmd.none
             )
@@ -133,18 +130,3 @@ update msg model =
                 (model, goOut)
 
 
-getLastLocation : Model -> String
-getLastLocation model =
-    let
-        history =
-            model.history
-
-        location =
-            List.head history
-    in
-        case location of
-            Just location ->
-                toString location.hash
-
-            Nothing ->
-                "\"\""

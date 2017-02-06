@@ -3,7 +3,6 @@ module View exposing (view)
 import Html exposing (Html, div, ul, li, a, text, Attribute)
 import Html.Attributes exposing (class, style, id, href, classList)
 import Model exposing (Model)
-import Update exposing (getLastLocation)
 import Styles.Styles as Styles exposing (..)
 import Styles.Room as Room exposing (..)
 import Char exposing (isLower)
@@ -22,10 +21,10 @@ view model =
         , div [ view3d, cubeStyle model, id "view3d" ]
             [ let
                 url =
-                    getLastLocation model
+                    model.current
 
                 currentWall =
-                    String.filter isLower url
+                    String.filter isLower url.hash
 
                 roomHeight =
                     model.size |> .height

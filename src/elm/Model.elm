@@ -10,7 +10,7 @@ import Navigation
 
 type alias Model =
     { size : Size
-    , history : List Navigation.Location
+    -- , history : List Navigation.Location
     , current : Navigation.Location
     }
 
