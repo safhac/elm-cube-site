@@ -9,18 +9,26 @@ import Html.Attributes exposing (classList, class, src, alt)
 
 content : String -> Html msg
 content active =
-    div 
-        [ classList 
-            [ ( "topContent", True)
+    div
+        [ classList
+            [ ( "topContent", True )
             , ( "active", active == "top" )
             ]
         ]
         [ div []
-            ( List.map showGiphy [ "angry", "dance", "gym", "massage", "piano", "tab" ] )
+            ([ "angry", "dance", "gym", "massage", "piano", "tab" ]
+                |> List.map showGiphy
+            )
         ]
-        
 
 
 showGiphy : String -> Html msg
 showGiphy name =
-    img [ src (String.trim "/static/img/top/" ++ name ++ ".gif") ] []
+    img
+        [ src <|
+            String.trim <|
+                "/static/img/top/"
+                    ++ name
+                    ++ ".gif"
+        ]
+        []
