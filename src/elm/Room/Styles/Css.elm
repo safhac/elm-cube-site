@@ -3,6 +3,7 @@ module Room.Styles.Css exposing (..)
 import Html exposing (Attribute)
 import Html.Attributes exposing (style, class)
 import App.Model exposing (..)
+import Room.Model exposing (..)
 
 
 -- import Room.Model exposing (..)
@@ -59,11 +60,11 @@ cubeStyle model =
 {- additional cube styles for transforming center wall conforming to window height -}
 
 
-additionalStyles : String -> Int -> Html.Attribute msg
-additionalStyles currentWall height_ =
-    if currentWall == "center" then
+additionalStyles : Room -> Html.Attribute msg
+additionalStyles room =
+    if room.active == Center then
         style
-            [ ( "transform", "translateZ(" ++ toString height_ ++ "px)" )
+            [ ( "transform", "translateZ(" ++ toString room.size.height ++ "px)" )
             ]
     else
         style

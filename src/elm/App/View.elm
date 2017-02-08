@@ -3,7 +3,6 @@ module App.View exposing (view)
 import Html exposing (Html, div, ul, li, a, text, Attribute)
 import Html.Attributes exposing (class, id, href)
 import App.Model exposing (..)
--- import Room.Model exposing (..)
 import Room.View as RoomView exposing (..)
 import Room.Styles.Css exposing (view3d, cubeStyle)
 
@@ -27,7 +26,7 @@ view model =
 
             ]
         , div [ view3d, cubeStyle model ]
-            [ RoomView model.room
+            [ RoomView.view model.room
             ]
         ]
 
