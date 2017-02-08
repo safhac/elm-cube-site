@@ -1,8 +1,43 @@
-module Styles.Room exposing (..)
+module Room.Styles.Css exposing (..)
 
 import Html exposing (Attribute)
-import Html.Attributes exposing (style)
-import Model exposing (..)
+import Html.Attributes exposing (style, class)
+import App.Model exposing (..)
+
+
+-- import Room.Model exposing (..)
+
+
+view3d : Html.Attribute msg
+view3d =
+    style
+        [ ( "perspective", "500px" )
+        , ( "display", "inline-block" )
+        , ( "text-align", "center" )
+        , ( "overflow", "hidden" )
+        ]
+
+
+roomStyle : List ( String, String )
+roomStyle =
+    [ ( "position", "relative" )
+    , ( "transform-style", "preserve-3d" )
+    , ( "transition", "all 1s ease-in-out" )
+    , ( "width", "100%" )
+    , ( "height", "100%" )
+    ]
+
+
+navbar : Html.Attribute msg
+navbar =
+    style
+        [ ( "width", "100%" )
+        , ( "display", "flex" )
+        , ( "position", "absolute" )
+        , ( "justify-content", "space-around" )
+        , ( "z-index", "2" )
+        ]
+
 
 
 {- cube style conforming to window size -}
@@ -10,10 +45,14 @@ import Model exposing (..)
 
 cubeStyle : Model -> Html.Attribute any
 cubeStyle model =
-    style
-        [ ( "width", toString (model.size.width - 5) ++ "px" )
-        , ( "height", toString (model.size.height - 5) ++ "px" )
-        ]
+    let
+        room =
+            model.room
+    in
+        style
+            [ ( "width", toString (room.size.width - 5) ++ "px" )
+            , ( "height", toString (room.size.height - 5) ++ "px" )
+            ]
 
 
 
@@ -46,8 +85,9 @@ additionalWallStyles page view height_ =
             [ ( "display", "none" ) ]
     else if page == "center" then
         style
-            [ ( "transform", "translateZ(-" ++ toString height_ ++ "px)" ) 
-            , ("opacity", "0.5")]
+            [ ( "transform", "translateZ(-" ++ toString height_ ++ "px)" )
+            , ( "opacity", "0.5" )
+            ]
     else
         style
             [ ( "width", "100%" ) ]

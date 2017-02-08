@@ -3,10 +3,11 @@ module Main exposing (..)
 
 import Window exposing (Size)
 import Navigation exposing (program)
-import Model exposing (Model)
-import Update exposing (Msg(..), init, update, onKeyPress)
-import View exposing (view)
 import Keyboard exposing (presses)
+import App.Model exposing (..)
+import App.Update exposing (Msg(..), onKeyPress, sizeChange)
+import App.View exposing (view)
+
 
 
 
@@ -17,9 +18,9 @@ import Keyboard exposing (presses)
 main : Program Never Model Msg
 main =
     Navigation.program UrlChange
-        { init = init
-        , view = view
-        , update = update
+        { init = App.Update.init
+        , view = App.View.view
+        , update = App.Update.update
         , subscriptions = subscriptions
         }
 
@@ -27,9 +28,9 @@ main =
 
 -- SUBSCRIPTIONS
 
-subscriptions : Model -> Sub Update.Msg
+subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ Window.resizes SizeChange
+        [ Window.resizes (RoomMsg << sizeChange)
         , Keyboard.presses onKeyPress 
         ]

@@ -1,4 +1,4 @@
-module Rooms.Top exposing (..)
+module Room.Wall.Top exposing (..)
 
 import Html as Html exposing (Html, Attribute, div, h1, img, text)
 import Html.Attributes exposing (classList, class, src, alt)
