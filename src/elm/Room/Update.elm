@@ -28,8 +28,7 @@ update msg room =
             let 
                 activeWall
                     = getWallFromLocation location 
-                -- _ = 
-                --     Debug.log "activeWall" activeWall
+
             in 
              ( { room | active = activeWall }, Cmd.none)
 
@@ -43,9 +42,6 @@ update msg room =
 
 getWallFromLocation : Location -> Wall
 getWallFromLocation location =   
-    let _
-        = Debug.log "loc" (String.toLower location.hash)
-    in
     case String.toLower location.hash of
         "#back" ->
                 Out

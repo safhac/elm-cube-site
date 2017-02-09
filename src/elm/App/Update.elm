@@ -1,7 +1,7 @@
 module App.Update exposing (..)
 
 import Navigation exposing (Location, newUrl)
--- import Task exposing (perform)
+import Task exposing (perform)
 import Window exposing (Size)
 import App.Model exposing (Model)
 import Room.Model exposing (..)
@@ -26,7 +26,7 @@ init location =
     ( { current = location
       , room = Room.Update.initialModel
       }
-    , Cmd.none
+    , Task.perform (RoomMsg << sizeChange) Window.size 
     )
 
 

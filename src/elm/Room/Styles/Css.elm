@@ -2,7 +2,7 @@ module Room.Styles.Css exposing (..)
 
 import Html exposing (Attribute)
 import Html.Attributes exposing (style, class)
-import App.Model exposing (..)
+-- import App.Model exposing (..)
 import Room.Model exposing (..)
 
 
@@ -44,16 +44,15 @@ navbar =
 {- cube style conforming to window size -}
 
 
-cubeStyle : Model -> Html.Attribute any
-cubeStyle model =
-    let
-        room =
-            model.room
+cubeStyle : Room -> Html.Attribute any
+cubeStyle room =
+    let _
+        = Debug.log "cubeStyle" room.size
     in
-        style
-            [ ( "width", toString (room.size.width - 5) ++ "px" )
-            , ( "height", toString (room.size.height - 5) ++ "px" )
-            ]
+    style
+        [ ( "width", toString (room.size.width - 5) ++ "px" )
+        , ( "height", toString (room.size.height - 5) ++ "px" )
+        ]
 
 
 

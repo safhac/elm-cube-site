@@ -12,7 +12,7 @@ import Room.Styles.Css as Css exposing (..)
 
 view : Room -> Html msg
 view room =
-    div []
+    div [ class "container" ]
         [ div
             [ classList
                 [ ( "room", True )

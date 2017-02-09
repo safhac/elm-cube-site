@@ -3,7 +3,7 @@ module App.View exposing (view)
 import Html exposing (Html, div, ul, li, a, text, Attribute)
 import Html.Attributes exposing (class, id, href)
 import App.Model exposing (..)
-import Room.View as RoomView exposing (..)
+import Room.View as Room exposing (..)
 import Room.Styles.Css exposing (view3d, cubeStyle)
 
 
@@ -12,7 +12,7 @@ import Room.Styles.Css exposing (view3d, cubeStyle)
 
 view : Model -> Html msg
 view model =
-    div []
+    div [ class "Elm-Application"]
         [ div [ class "navbar" ]
             [ let
                 r =
@@ -25,8 +25,8 @@ view model =
                     (List.map (\wall -> viewLink <| toString wall ) walls)
 
             ]
-        , div [ view3d, cubeStyle model ]
-            [ RoomView.view model.room
+        , div [ view3d, cubeStyle model.room ]
+            [ Room.view model.room
             ]
         ]
 
