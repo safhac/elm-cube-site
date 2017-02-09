@@ -1,0 +1,27 @@
+room.view.
+-- case room.active of
+         -- Room.Model.Top ->          --, List.map (\wall -> Css.additionalWallStyles wall room.active room.size.height ) room.walls
+         --     Top.content room.active
+         -- _ ->
+         --     div [][]
+
+                     -- case room.active of
+         -- Room.Model.Top ->          --, 
+         --     Top.content room.active
+         -- _ ->
+         --     div [][]
+
+         -- (List.map (\wall -> Css.additionalWallStyles wall room.active room.size.height) room.walls) |> Attributes.map
+
+         -- let 
+                --     styles =
+                --         Css.additionalRoomStyles room
+                    
+                --     style_ =
+                --         List.concat styles
+                --     _ = Debug.log "style" style_
+                -- in
+                --     style [("","")]
+                    
+        -- , Css.additionalWallStyles room
+        -- ,   Attributes.map Attributes.style (List.concat (Css.additionalRoomStyles room))

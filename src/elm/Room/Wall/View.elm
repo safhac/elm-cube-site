@@ -1,1 +1,1 @@
-module Room.Wall.View exposing (view)
+-- module Room.Wall.View exposing (view)

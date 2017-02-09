@@ -11,19 +11,15 @@ import Char exposing (fromCode)
 
 -- MSG
 
-
 type Msg
-    = UrlChange Navigation.Location
-    | RoomMsg Room.Update.Msg
+    = RoomMsg Room.Update.Msg
+    -- UrlChange Navigation.Location
     -- SizeChange Room.Update.Msg Size
     -- | SetActiveWall Room.Update.Msg Wall
 
 
 
-
-
 --INIT
-
 
 init : Navigation.Location -> ( Model, Cmd Msg )
 init location =
@@ -32,6 +28,28 @@ init location =
       }
     , Cmd.none
     )
+
+
+-- UPDATE
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        -- UrlChange location ->
+        --      { model | current = location } ! []
+
+        RoomMsg roomMsg ->
+            let
+                (roomModel, cmds ) =
+                    Room.Update.update roomMsg model.room
+                _ = 
+                    Debug.log "room" roomModel
+            in
+                ({ model | room = roomModel }, Cmd.map RoomMsg cmds)
+
+
+
 
 
 onKeyPress : Int -> Msg
@@ -62,22 +80,9 @@ sizeChange size =
     Room.Update.SizeChange size
 
 
--- UPDATE
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        UrlChange location ->
-             { model | current = location } ! []
-
-
-        RoomMsg roomMsg ->
-            let
-                updatedRoom = Room.Update.update roomMsg model.room
-            in
-                { model | room = updatedRoom } ! []
-
+urlChange : Location -> Room.Update.Msg
+urlChange location =
+    Room.Update.UrlChange location
 
 
 buildUrl : Wall -> String

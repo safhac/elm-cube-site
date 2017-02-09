@@ -75,16 +75,16 @@ additionalStyles room =
 {- additional styles for center, right and left walls conforming to window height -}
 
 
-additionalWallStyles : String -> String -> Int -> Html.Attribute msg
-additionalWallStyles page view height_ =
-    if (page == "right" || page == "left") && page /= view then
+additionalWallStyles : Wall -> Wall -> Int -> Html.Attribute msg
+additionalWallStyles wall active height_ =
+    if (wall == Room.Model.Right || wall == Room.Model.Left) && wall /= active then
         style
-            [ ( "width", toString height_ ++ "px" )
+            [ ( "width", toString (height_) ++ "px" )
             ]
-    else if (view == "bottom" && page == "top") || (view == "top" && page == "bottom") || ((view == "right" || view == "left") && page == "center") then
+    else if (active == Room.Model.Bottom && wall == Room.Model.Top) || (active == Room.Model.Top && wall == Room.Model.Bottom) || ((active == Room.Model.Right || active == Room.Model.Left) && wall == Room.Model.Center) then
         style
             [ ( "display", "none" ) ]
-    else if page == "center" then
+    else if wall == Room.Model.Center then
         style
             [ ( "transform", "translateZ(-" ++ toString height_ ++ "px)" )
             , ( "opacity", "0.5" )
@@ -92,3 +92,26 @@ additionalWallStyles page view height_ =
     else
         style
             [ ( "width", "100%" ) ]
+
+
+additionalRoomStyles : Room -> List (Html.Attribute msg)
+additionalRoomStyles room =
+    List.map
+        (\wall ->
+            if (wall == Room.Model.Right || wall == Room.Model.Left) && wall /= room.active then
+                style
+                    [ ( "width", toString (room.size.height) ++ "px" )
+                    ]
+            else if (room.active == Room.Model.Bottom && wall == Room.Model.Top) || (room.active == Room.Model.Top && wall == Room.Model.Bottom) || ((room.active == Room.Model.Right || room.active == Room.Model.Left) && wall == Room.Model.Center) then
+                style
+                    [ ( "display", "none" ) ]
+            else if wall == Room.Model.Center then
+                style
+                    [ ( "transform", "translateZ(-" ++ toString room.size.height ++ "px)" )
+                    , ( "opacity", "0.5" )
+                    ]
+            else
+                style
+                    [ ( "width", "100%" ) ]
+        )
+        room.walls

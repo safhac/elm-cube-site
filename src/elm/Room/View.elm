@@ -1,60 +1,52 @@
 module Room.View exposing (..)
 
 import Html exposing (Html, div, ul, li, a, text, Attribute)
-import Html.Attributes exposing (class, style, id, href, classList)
+import Html.Attributes as Attributes exposing (class, style, id, href, classList, map)
 import Room.Model exposing (Room, Wall)
 import Room.Styles.Css as Css exposing (..)
-import Room.Wall.Top as Top exposing (..)
+
+
+-- import String exposing (..)
+-- import Room.Wall.Top as Top exposing (..)
 
 
 view : Room -> Html msg
-view model =
+view room =
     div []
-        [ buildRoom model
+        [ div
+            [ classList
+                [ ( "room", True )
+                , ( "roomTop", room.active == Room.Model.Top )
+                , ( "roomRight", room.active == Room.Model.Right )
+                , ( "roomBottom", room.active == Room.Model.Bottom )
+                , ( "roomLeft", room.active == Room.Model.Left )
+                , ( "roomCenter", room.active == Room.Model.Center )
+                ]
+            , Css.additionalStyles room
+            ]
+            --  (List.map toString room.walls
+            --     |> join " "
+            --     |> text
+            [ (buildWalls room) ]
         ]
 
 
-{- Display the room. classList determines which css class to add for 3d transformations for each view (up class="room roomTop", down class="room roomBottom" etc.. -}
 
-
-buildRoom : Room -> Html msg
-buildRoom room =
-    div
-        [ classList
-            [ ( "room", True )
-            , ( "roomTop", room.active == Room.Model.Top )
-            , ( "roomRight", room.active == Room.Model.Right )
-            , ( "roomBottom", room.active == Room.Model.Bottom )
-            , ( "roomLeft", room.active == Room.Model.Left )
-            , ( "roomCenter", room.active == Room.Model.Center )
-            ]
-        , Css.additionalStyles room
-         ]
-         [ text "room" ]
-
-
-
--- (List.map (\w -> getRoomWall w room.active) [ "center", "top", "right", "bottom", "left" ])
 {- fills the room with walls styled according to the current view
    and window height
 -}
-
-
-{- getRoomWall : String -> String -> Int -> Html msg
- getRoomWall wall currentWall roomHeight =
-     div
-         [ classList
-             [ ( "wall", True )
-             , ( "top", wall == "top" )
-             , ( "right", wall == "right" )
-             , ( "floor", wall == "bottom" )
-             , ( "left", wall == "left" )
-             , ( "center", wall == "center" )
-             ]
-         , Css.additionalWallStyles wall currentWall roomHeight
+buildWalls : Room -> Html msg
+buildWalls room =
+    div
+        ([ classList
+            [ ( "wall", True )
+            , ( "top", room.active == Room.Model.Top )
+            , ( "right", room.active == Room.Model.Right )
+            , ( "floor", room.active == Room.Model.Bottom )
+            , ( "left", room.active == Room.Model.Left )
+            , ( "center", room.active == Room.Model.Center )
+            ]
          ]
-         [ case wall of
-             "top" ->
-                 Top.content currentWall
-
--}
+            ++ Css.additionalRoomStyles room
+        )
+        []
