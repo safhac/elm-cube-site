@@ -11,45 +11,43 @@ import Char exposing (fromCode)
 
 -- MSG
 
+
 type Msg
     = RoomMsg Room.Update.Msg
-    -- UrlChange Navigation.Location
-    -- SizeChange Room.Update.Msg Size
-    -- | SetActiveWall Room.Update.Msg Wall
 
 
 
+-- UrlChange Navigation.Location
+-- SizeChange Room.Update.Msg Size
+-- | SetActiveWall Room.Update.Msg Wall
 --INIT
+
 
 init : Navigation.Location -> ( Model, Cmd Msg )
 init location =
     ( { current = location
       , room = Room.Update.initialModel
       }
-    , Task.perform (RoomMsg << sizeChange) Window.size 
+    , Task.perform (RoomMsg << sizeChange) Window.size
     )
 
 
+
 -- UPDATE
+{- currently all updates are done in Room
+   this will change model will hold multiple rooms
+-}
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        -- UrlChange location ->
-        --      { model | current = location } ! []
-
         RoomMsg roomMsg ->
             let
-                (roomModel, cmds ) =
+                ( roomModel, cmds ) =
                     Room.Update.update roomMsg model.room
-                _ = 
-                    Debug.log "room" roomModel
             in
-                ({ model | room = roomModel }, Cmd.map RoomMsg cmds)
-
-
-
+                ( { model | room = roomModel }, Cmd.map RoomMsg cmds )
 
 
 onKeyPress : Int -> Msg
@@ -72,7 +70,6 @@ onKeyPress code =
 
         _ ->
             RoomMsg <| Room.Update.SetActiveWall Out
-
 
 
 sizeChange : Size -> Room.Update.Msg
@@ -105,5 +102,3 @@ buildUrl wall =
 
         Left ->
             "left"
-
-

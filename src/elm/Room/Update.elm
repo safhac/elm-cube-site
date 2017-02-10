@@ -2,7 +2,6 @@ module Room.Update exposing (..)
 
 import Window exposing (Size)
 import Navigation exposing (Location)
--- import App.Model exposing (..)
 import Room.Model exposing (..)
 
 
@@ -16,8 +15,8 @@ type Msg
 initialModel : Room
 initialModel =
     { active = Out 
-        , size = Size 0 0
-    , walls = [ Out, Center, Top, Right, Bottom, Left ]
+        , size = Size 600 600
+    , walls = [ Center, Top, Right, Bottom, Left ]
     }
 
 

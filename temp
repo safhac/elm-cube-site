@@ -25,3 +25,21 @@ room.view.
                     
         -- , Css.additionalWallStyles room
         -- ,   Attributes.map Attributes.style (List.concat (Css.additionalRoomStyles room))
+
+
+
+        buildWalls : Room -> Html msg
+buildWalls room =
+    div
+        ([ classList
+            [ ( "wall", True )
+            , ( "top", room.active == Room.Model.Top )
+            , ( "right", room.active == Room.Model.Right )
+            , ( "floor", room.active == Room.Model.Bottom )
+            , ( "left", room.active == Room.Model.Left )
+            , ( "center", room.active == Room.Model.Center )
+            ]
+         ]
+            ++ Css.additionalRoomStyles room
+        )
+        []

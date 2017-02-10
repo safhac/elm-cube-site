@@ -3,16 +3,15 @@ module Room.Wall.Top exposing (..)
 import Html as Html exposing (Html, Attribute, div, h1, img, text)
 import Html.Attributes exposing (classList, class, src, alt)
 
+import Room.Model exposing (..)
 
--- import Model exposing (..)
 
-
-content : String -> Html msg
+content : Wall -> Html msg
 content active =
     div
         [ classList
             [ ( "topContent", True )
-            , ( "active", active == "top" )
+            , ( "active", active == Room.Model.Top )
             ]
         ]
         [ div []

@@ -5,10 +5,6 @@ module Room.Model exposing (..)
 import Window exposing (Size)
 
 
--- type alias RoomWall =
---     {
---         wall : Wall
---     }
 
 type Wall
     = Out
