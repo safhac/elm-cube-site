@@ -1,10 +1,10 @@
 module Room.View exposing (..)
 
-import Html exposing (Html, div, ul, li, a, text, Attribute)
+import Html exposing (Html, div, h1, p, ul, li, a, text, Attribute)
 import Html.Attributes as Attributes exposing (class, style, id, href, classList, map)
 import Room.Model exposing (Room, Wall)
 import Room.Styles.Css as Css exposing (..)
-import Room.Wall.Top as Top exposing (content)
+import Room.Wall.Top as Top exposing (..)
 
 
 view : Room -> Html msg
@@ -47,10 +47,33 @@ buildWalls wall active height_ =
             ]
         , Css.additionalWallStyles wall active height_
         ]
-        [
-            case wall of
-                Room.Model.Top ->
-                    content active
-                _ ->
-                    div [][]
+        [ case wall of
+            Room.Model.Top ->
+                Top.content active
+
+            Room.Model.Center ->
+                div [ class "content" ]
+                    [ h1 [] [ text "5" ]
+                    , a [ href "https://github.com/safhac/elm-cube-site" ]
+                        [ h1 [] [ text "https://github.com/safhac/elm-cube-site" ]
+                        ]
+                    ]
+
+            Room.Model.Right ->
+                div [ class "content" ]
+                    [ h1 [] [ text "6" ]
+                    ]
+
+            Room.Model.Bottom ->
+                div [ class "content" ]
+                    [ h1 [] [ text "2" ]
+                    ]
+
+            Room.Model.Left ->
+                div [ class "content" ]
+                    [ h1 [] [ text "4" ]
+                    ]
+
+            _ ->
+                div [] []
         ]

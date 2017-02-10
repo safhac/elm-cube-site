@@ -14,10 +14,14 @@ content active =
             , ( "active", active == Room.Model.Top )
             ]
         ]
-        [ div []
-            ([ "angry", "dance", "gym", "massage", "piano", "tab" ]
+        [ h1 [] [ text "2" ]
+        , div []
+            (
+                
+                [ "angry", "dance", "gym", "massage", "piano", "tab" ]
                 |> List.map showGiphy
-            )
+                
+            ) 
         ]
 
 

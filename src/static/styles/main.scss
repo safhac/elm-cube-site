@@ -151,23 +151,7 @@ div {
     }
 }
 
-// @keyframes popin {
-//     from {}
-//     to {
-//         opacity: 1;
-//         transform: rotateX(0deg);
-//     }
-// }
-// @keyframes popout {
-//     from {
-//         opacity: 1;
-//         transform: rotateX(0deg);
-//     }
-//     to {
-//         opacity: 0;
-//         transform: rotateX(90deg);
-//     }
-// }
+
 
 /* bottom wall */
 
@@ -199,6 +183,11 @@ div {
     text-align: left;
 }
 
+/************************************************* wall content *************************************************/
+.content {
+    margin-top: 10%;
+}
+    
 
 /************************************************* navigation styles *************************************************/
 
@@ -220,3 +209,4 @@ div {
     padding: 5px;
     display: inline;
 }
+

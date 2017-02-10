@@ -14,15 +14,16 @@ view : Model -> Html msg
 view model =
     div [ class "Elm-Application"]
         [ div [ class "navbar" ]
-            [ let
-                r =
-                    model.room
+            [ 
+            --     let
+            --     r =
+            --         model.room
 
-                walls =
-                    r.walls
-              in
-                ul []
-                    (List.map (\wall -> viewLink <| toString wall ) walls)
+            --     walls =
+            --         r.walls
+            --   in
+            --     ul []
+            --         (List.map (\wall -> viewLink <| toString wall ) walls)
 
             ]
         , div [ view3d, cubeStyle model.room ]
