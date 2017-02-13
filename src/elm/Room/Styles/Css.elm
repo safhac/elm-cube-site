@@ -3,6 +3,7 @@ module Room.Styles.Css exposing (..)
 import Html exposing (Attribute)
 import Html.Attributes exposing (style, class)
 import Room.Model exposing (..)
+import Room.Update exposing (..)
 
 
 view3d : Html.Attribute msg
@@ -52,7 +53,7 @@ cubeStyle room =
 {- additional cube styles for transforming center wall conforming to window height -}
 
 
-additionalStyles : Room -> Html.Attribute msg
+additionalStyles : Room -> Html.Attribute Msg
 additionalStyles room =
     if room.active == Center then
         style

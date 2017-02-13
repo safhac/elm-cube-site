@@ -3,11 +3,15 @@ module Room.View exposing (..)
 import Html exposing (Html, div, h1, p, ul, li, a, text, Attribute)
 import Html.Attributes as Attributes exposing (class, style, id, href, classList, map)
 import Room.Model exposing (Room, Wall)
+import Room.Update exposing (..)
 import Room.Styles.Css as Css exposing (..)
 import Room.Wall.Top as Top exposing (..)
+import Room.Update exposing (..)
+import Touch exposing (TouchEvent(..), Touch)
+import SingleTouch exposing (SingleTouch, onSingleTouch)
 
 
-view : Room -> Html msg
+view : Room -> Html Msg
 view room =
     div [ class "roomContainer" ]
         [ div
@@ -20,12 +24,43 @@ view room =
                 , ( "roomCenter", room.active == Room.Model.Center )
                 ]
             , Css.additionalStyles room
+            , onTouchStart
+            , onTouchMove
             ]
             (List.map
                 (\wall -> buildWalls wall room.active room.size.height)
                 room.walls
             )
         ]
+
+
+onTouchStart : Attribute Msg
+onTouchStart =
+    onSingleTouch TouchStart Touch.preventAndStop <| SingleTouchMsg
+
+
+onTouchMove : Attribute Msg
+onTouchMove =
+    onSingleTouch TouchMove Touch.preventAndStop <| SingleTouchMsg
+
+
+onTouchEnd : Attribute Msg
+onTouchEnd =
+    onSingleTouch TouchEnd Touch.preventAndStop <| SingleTouchMsg
+
+
+onTouchCancel : Attribute Msg
+onTouchCancel =
+    onSingleTouch TouchCancel Touch.preventAndStop <| SingleTouchMsg
+
+
+onAllTouch : List (Attribute Msg)
+onAllTouch =
+    [ onSingleTouch TouchStart Touch.preventAndStop <| SingleTouchMsg
+    , onSingleTouch TouchMove Touch.preventAndStop <| SingleTouchMsg
+    , onSingleTouch TouchEnd Touch.preventAndStop <| SingleTouchMsg
+    , onSingleTouch TouchCancel Touch.preventAndStop <| SingleTouchMsg
+    ]
 
 
 
@@ -61,7 +96,9 @@ buildWalls wall active height_ =
 
             Room.Model.Right ->
                 div [ class "content" ]
-                    [ h1 [] [ text "6" ]
+                    [ a [ href ("#right") ]
+                        [ h1 [] [ text "6" ]
+                        ]
                     ]
 
             Room.Model.Bottom ->
