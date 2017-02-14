@@ -30,6 +30,7 @@ view room =
             , onTouchEnd
             , onTouchCancel
             ]
+            {-debugging purposes-}
             -- [ 
             --     h1 [] [text room.message]
             -- ]
@@ -68,6 +69,8 @@ onTouchCancel =
 --     , onSingleTouch TouchEnd Touch.preventAndStop <| SingleTouchMsg
 --     , onSingleTouch TouchCancel Touch.preventAndStop <| SingleTouchMsg
 --     ]
+
+
 {- fills the room with walls styled according to the current view
    and window height
 -}

@@ -61,20 +61,22 @@ update msg room =
                                     ( singleTouch.touch.clientX, singleTouch.touch.clientY )
 
                                 diff =
-                                    ( (Tuple.first newTouch) - (Tuple.first roomTouch)
-                                    , (Tuple.second newTouch) - (Tuple.second roomTouch)
+                                    ( (Tuple.first roomTouch) - (Tuple.first newTouch)
+                                    , (Tuple.second roomTouch) - (Tuple.second newTouch)
                                     )
                             in
                                 if diff == (0,0) && room.active /= Out then
                                     update (SetActiveWall Out) room 
-                                else if Tuple.first diff < -10 then 
-                                    update (SetActiveWall Left) room 
-                                else if Tuple.first diff > 10 then 
+                                else if diff == (0,0) && room.active == Out then
+                                    update (SetActiveWall Center) room 
+                                else if Tuple.first diff < -30 then 
                                     update (SetActiveWall Right) room 
-                                else if Tuple.second diff < -10 then 
+                                else if Tuple.first diff > 30 then 
+                                    update (SetActiveWall Left) room 
+                                else if Tuple.second diff < -30 then 
                                     update (SetActiveWall Top) room 
-                                else if Tuple.second diff > 10 then 
-                                    update (SetActiveWall Top) room 
+                                else if Tuple.second diff > 30 then 
+                                    update (SetActiveWall Bottom) room 
                                 else 
                                     room ! []
 
