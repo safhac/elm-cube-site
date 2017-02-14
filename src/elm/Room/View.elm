@@ -2,13 +2,14 @@ module Room.View exposing (..)
 
 import Html exposing (Html, div, h1, p, ul, li, a, text, Attribute)
 import Html.Attributes as Attributes exposing (class, style, id, href, classList, map)
+import Touch exposing (TouchEvent(..), Touch)
+import SingleTouch exposing (SingleTouch, onSingleTouch)
 import Room.Model exposing (Room, Wall)
 import Room.Update exposing (..)
 import Room.Styles.Css as Css exposing (..)
 import Room.Wall.Top as Top exposing (..)
 import Room.Update exposing (..)
-import Touch exposing (TouchEvent(..), Touch)
-import SingleTouch exposing (SingleTouch, onSingleTouch)
+
 
 
 view : Room -> Html Msg
@@ -26,11 +27,16 @@ view room =
             , Css.additionalStyles room
             , onTouchStart
             , onTouchMove
+            , onTouchEnd
+            , onTouchCancel
             ]
-            (List.map
+            -- [ 
+            --     h1 [] [text room.message]
+            -- ]
+             (List.map
                 (\wall -> buildWalls wall room.active room.size.height)
-                room.walls
-            )
+                room.walls)
+            
         ]
 
 
@@ -54,16 +60,14 @@ onTouchCancel =
     onSingleTouch TouchCancel Touch.preventAndStop <| SingleTouchMsg
 
 
-onAllTouch : List (Attribute Msg)
-onAllTouch =
-    [ onSingleTouch TouchStart Touch.preventAndStop <| SingleTouchMsg
-    , onSingleTouch TouchMove Touch.preventAndStop <| SingleTouchMsg
-    , onSingleTouch TouchEnd Touch.preventAndStop <| SingleTouchMsg
-    , onSingleTouch TouchCancel Touch.preventAndStop <| SingleTouchMsg
-    ]
 
-
-
+-- onAllTouch : List (Attribute Msg)
+-- onAllTouch =
+--     [ onSingleTouch TouchStart Touch.preventAndStop <| SingleTouchMsg
+--     , onSingleTouch TouchMove Touch.preventAndStop <| SingleTouchMsg
+--     , onSingleTouch TouchEnd Touch.preventAndStop <| SingleTouchMsg
+--     , onSingleTouch TouchCancel Touch.preventAndStop <| SingleTouchMsg
+--     ]
 {- fills the room with walls styled according to the current view
    and window height
 -}
