@@ -70,9 +70,9 @@ update msg room =
                                 else if diff == (0,0) && room.active == Out then
                                     update (SetActiveWall Center) room 
                                 else if Tuple.first diff < -30 then 
-                                    update (SetActiveWall Right) room 
-                                else if Tuple.first diff > 30 then 
                                     update (SetActiveWall Left) room 
+                                else if Tuple.first diff > 30 then 
+                                    update (SetActiveWall Right) room 
                                 else if Tuple.second diff < -30 then 
                                     update (SetActiveWall Top) room 
                                 else if Tuple.second diff > 30 then 
