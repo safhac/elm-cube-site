@@ -11,7 +11,6 @@ import Room.Wall.Top as Top exposing (..)
 import Room.Update exposing (..)
 
 
-
 view : Room -> Html Msg
 view room =
     div [ class "roomContainer" ]
@@ -30,45 +29,15 @@ view room =
             , onTouchEnd
             , onTouchCancel
             ]
-            {-debugging purposes-}
-            -- [ 
+            {- debugging purposes -}
+            -- [
             --     h1 [] [text room.message]
             -- ]
-             (List.map
+            (List.map
                 (\wall -> buildWalls wall room.active room.size.height)
                 room.walls)
-            
         ]
 
-
-onTouchStart : Attribute Msg
-onTouchStart =
-    onSingleTouch TouchStart Touch.preventAndStop <| SingleTouchMsg
-
-
-onTouchMove : Attribute Msg
-onTouchMove =
-    onSingleTouch TouchMove Touch.preventAndStop <| SingleTouchMsg
-
-
-onTouchEnd : Attribute Msg
-onTouchEnd =
-    onSingleTouch TouchEnd Touch.preventAndStop <| SingleTouchMsg
-
-
-onTouchCancel : Attribute Msg
-onTouchCancel =
-    onSingleTouch TouchCancel Touch.preventAndStop <| SingleTouchMsg
-
-
-
--- onAllTouch : List (Attribute Msg)
--- onAllTouch =
---     [ onSingleTouch TouchStart Touch.preventAndStop <| SingleTouchMsg
---     , onSingleTouch TouchMove Touch.preventAndStop <| SingleTouchMsg
---     , onSingleTouch TouchEnd Touch.preventAndStop <| SingleTouchMsg
---     , onSingleTouch TouchCancel Touch.preventAndStop <| SingleTouchMsg
---     ]
 
 
 {- fills the room with walls styled according to the current view
@@ -121,3 +90,33 @@ buildWalls wall active height_ =
             _ ->
                 div [] []
         ]
+
+
+onTouchStart : Attribute Msg
+onTouchStart =
+    onSingleTouch TouchStart Touch.preventAndStop <| SingleTouchMsg
+
+
+onTouchMove : Attribute Msg
+onTouchMove =
+    onSingleTouch TouchMove Touch.preventAndStop <| SingleTouchMsg
+
+
+onTouchEnd : Attribute Msg
+onTouchEnd =
+    onSingleTouch TouchEnd Touch.preventAndStop <| SingleTouchMsg
+
+
+onTouchCancel : Attribute Msg
+onTouchCancel =
+    onSingleTouch TouchCancel Touch.preventAndStop <| SingleTouchMsg
+
+
+
+-- onAllTouch : List (Attribute Msg)
+-- onAllTouch =
+--     [ onSingleTouch TouchStart Touch.preventAndStop <| SingleTouchMsg
+--     , onSingleTouch TouchMove Touch.preventAndStop <| SingleTouchMsg
+--     , onSingleTouch TouchEnd Touch.preventAndStop <| SingleTouchMsg
+--     , onSingleTouch TouchCancel Touch.preventAndStop <| SingleTouchMsg
+--     ]
