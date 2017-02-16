@@ -1,6 +1,4 @@
-module App.Model exposing (Model)
-
-
+module App.Model exposing (..)
 
 import Navigation exposing (Location)
 import Room.Model exposing (..)
@@ -13,6 +11,3 @@ type alias Model =
     { current : Navigation.Location
     , room : Room
     }
-
-
-

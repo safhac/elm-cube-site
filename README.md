@@ -1,4 +1,4 @@
-# elm-resources-cube
+# elm-cube-site
 
 A silly lil' 3d cube SPA
 

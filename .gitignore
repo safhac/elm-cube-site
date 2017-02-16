@@ -1,6 +1,9 @@
+.gitignore
+.firebaserc
 elm-stuff/
 node_modules/
 tmp/
 dist/
 debug.log
 slack.txt
+temp.txt
